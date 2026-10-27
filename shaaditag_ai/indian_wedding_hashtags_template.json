@@ -1,0 +1,2040 @@
+{
+  "dataset_metadata": {
+    "title": "Indian Wedding Hashtag Creative Generation — LLM SFT & Chain-of-Thought (CoT) Training Dataset",
+    "version": "2.0.0",
+    "total_training_examples": 50,
+    "purpose": "Train and align Large Language Models (via Supervised Fine-Tuning, Few-Shot In-Context Learning, or Direct Preference Optimization) to generate culturally resonant, emotionally intelligent, and witty Indian wedding hashtags using concrete Bride and Groom names, nicknames, surnames, and relationship backstories.",
+    "core_design_philosophy": "True creativity in Indian wedding hashtags is not mechanical syllable splicing (e.g., 'RahuPri2026') or shallow rhyming. It is the intersection of bilingual semantics (finding a real Hindi/Urdu/Punjabi/Sanskrit word hidden inside the couple's names), narrative specificity (capturing the couple's personalities, regional food/culture fusion, or courtship story), and phonetic timing (placing the couple's name on the punchline beat of a recognizable Bollywood title or English idiom)."
+  },
+  "llm_system_prompt_template": "You are an expert Indian Wedding Creative Copywriter and Bilingual Linguist fluent in English, Hindi, Hinglish, Punjabi, Gujarati, Urdu, and Sanskrit wedding traditions. Given a Bride and Groom's first names, last names, nicknames, cultural roots, and relationship story, generate a memorable, emotionally resonant wedding hashtag. Before producing the final hashtag, always reason step-by-step through: (1) Phonetic & Sub-Syllabic Decomposition of all provided names, (2) Bilingual Semantic Bridge Discovery (checking if combined syllables form a meaningful Hindi/Urdu/Sanskrit word like 'Nibaha', 'Riti', 'Ruh', 'Ishq', or 'Veer'), (3) Narrative & Cultural Anchoring (weaving in how they met, personality quirks, regional food/state fusion, or specific rituals like Haldi, Mehendi, Sangeet, and Pheras), (4) Idiom & Bollywood Subversion (placing the name on the final stressed beat of a familiar phrase), and (5) Readability & Anti-Cringe Auditing (verifying CamelCase clarity, <22 character length, spoken DJ test, and checking all-lowercase rendering for accidental awkward words). Always contrast your creative output against a rejected naive baseline and a rejected shallow wordplay attempt to demonstrate why the final choice carries genuine creative soul.",
+  "creative_reasoning_taxonomy": {
+    "1_bilingual_semantic_synthesis": {
+      "definition": "Blending fragments of the bride and groom's names so the resulting portmanteau is itself a meaningful word in Hindi, Urdu, Punjabi, or Sanskrit that reflects love, destiny, or vows.",
+      "why_it_beats_mere_wordplay": "Random ship names (#Brangelina-style splices) sound like gibberish to wedding guests. When the spliced name forms a real word like 'Nibaha' (fulfilled vows) or 'JodiKamalKi' (a miraculous pair), guests experience an 'aha!' moment of dual meaning."
+    },
+    "2_narrative_and_personality_anchoring": {
+      "definition": "Using the couple's lived dynamics—who is the troublemaker, how long they dated, their regional food rivalries, or where they met—as the structural spine of the hashtag.",
+      "why_it_beats_mere_wordplay": "A pun that could apply to any stranger feels generic. A hashtag like #SandysPrablem works because every guest at the reception already knows Prabby's rambunctious personality."
+    },
+    "3_phonetic_climax_subversion": {
+      "definition": "Substituting a bride or groom's name into a high-recognition English idiom or Bollywood hook where the phonetic vowel/consonant contour matches so closely that the brain hears both the original phrase and the couple's name simultaneously.",
+      "why_it_beats_mere_wordplay": "Forced rhymes break the rhythm of spoken speech. Preserving the exact syllabic stress (e.g., 'Ridhi Set Gogna' for 'Ready Set Go' or 'Sim Gets Her Rish' for 'Sim Gets Her Wish') makes the tag effortless to say aloud."
+    },
+    "4_cultural_and_ritual_contextualization": {
+      "definition": "Embedding the couple's names directly into the sensory language of Indian wedding functions (Haldi, Mehendi, Sangeet, Baraat, Saat Phere, Anand Karaj, Nikah).",
+      "why_it_beats_mere_wordplay": "Grounds the couple's identity in the sacred or festive energy of the specific ceremony rather than treating an Indian wedding like a generic Western reception."
+    },
+    "5_safety_and_usability_guardrails": {
+      "lowercase_trap_check": "Always inspect the hashtag in lowercase (e.g., Anu + Sid -> '#anusid' is a catastrophic failure; must be refactored to '#SidSnaggedAnu' or '#AnuWedsSid').",
+      "father_in_law_and_emcee_test": "Must be pronounceable by the wedding DJ over dhol beats and warm enough that elders smile rather than wince.",
+      "character_budget": "Keep under 20-22 characters in CamelCase so guests on mobile phones never mistype it."
+    }
+  },
+  "training_examples": [
+    {
+      "id": 1,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Subaha",
+          "last_name": "Khan",
+          "nickname": "Subu",
+          "cultural_roots": "North Indian / Urdu-speaking"
+        },
+        "groom": {
+          "first_name": "Nitin",
+          "last_name": "Verma",
+          "nickname": "Nitu",
+          "cultural_roots": "North Indian / Hindi-speaking"
+        },
+        "couple_story_and_vibe": "Long-term couple who stood by each other through thick and thin before tying the knot in an emotional cross-cultural ceremony."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Nitin starts with 'Ni-'; Subaha ends with '-baha'.",
+        "cultural_or_emotional_anchor": "In Hindi and Urdu poetry, 'Nibhana' / 'Nibaha' means to faithfully fulfill a sacred promise, vow, or lifelong relationship ('Saath Nibhana').",
+        "transformation_logic": "Instead of splicing the start of Subaha with the end of Nitin ('#SubTin', which is meaningless), reverse the order: take 'Ni' (from Nitin) + 'baha' (from Subaha) to form '#Nibaha'. It reads as a single poetic Urdu/Hindi word meaning 'We fulfilled our promise of love'.",
+        "readability_and_trap_check": "7 characters (#Nibaha), zero spelling ambiguity, deeply moving for elders and friends alike."
+      },
+      "target_output": {
+        "primary_hashtag": "#Nibaha",
+        "companion_variations": [
+          "#PyaarNibaha",
+          "#NitinNeSaathNibaha",
+          "#SubahaNitinForever"
+        ],
+        "reusable_pattern_schema": "Find [Syllable_A from Groom/Bride] + [Syllable_B from Partner] == [Meaningful Hindi/Urdu/Sanskrit Word about Love/Vows]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#NitinWedsSubaha",
+        "shallow_wordplay_rejected": "#SubTin2026",
+        "why_creative_choice_wins": "#SubTin2026 is a soulless syllable mashup that sounds like a metal container. #Nibaha fuses both names into a real Hindi/Urdu word celebrating kept promises and marital devotion."
+      },
+      "source_name": "WeddingWire India",
+      "source_url": "https://www.weddingwire.in/wedding-tips/quirky-wedding-hashtags-created-for-couples-by-the-weddingwire-india-community--c10389"
+    },
+    {
+      "id": 2,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Deepika",
+          "last_name": "Padukone",
+          "nickname": "Deepi",
+          "cultural_roots": "Konkani / South Indian"
+        },
+        "groom": {
+          "first_name": "Ranveer",
+          "last_name": "Singh",
+          "nickname": "Veer",
+          "cultural_roots": "Sindhi / Punjabi"
+        },
+        "couple_story_and_vibe": "High-energy, expressive groom and poised, graceful bride wanting something wittier than a standard celebrity ship name."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Deepika contains the stressed middle syllable '-pika-' (sounds like English 'Pick a'); Ranveer ends with '-veer' (Hindi/Punjabi for a brave, gallant hero).",
+        "cultural_or_emotional_anchor": "Bilingual Hindi-English double meaning: 'Pick a Veer' means 'Choose a brave warrior/groom' while visually embedding both Deepika and Ranveer.",
+        "transformation_logic": "Extract 'PikA' from Deepika and 'Veer' from Ranveer -> '#PikAVeer'. It functions simultaneously as a name blend, an English imperative phrase ('Pick a...'), and a Hindi compliment ('Veer').",
+        "readability_and_trap_check": "9 characters (#PikAVeer), CamelCase isolates the three words cleanly, passes lowercase check (#pikaveer)."
+      },
+      "target_output": {
+        "primary_hashtag": "#PikAVeer",
+        "companion_variations": [
+          "#DeepVeer",
+          "#DeepikaPickedHerVeer",
+          "#VeerKiDeepika"
+        ],
+        "reusable_pattern_schema": "[Internal Syllable of Bride = English Verb] + [Groom Name Fragment = Hindi Noun]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#DeepikaWedsRanveer",
+        "shallow_wordplay_rejected": "#RanIka",
+        "why_creative_choice_wins": "While #DeepVeer or #RanIka simply glue syllables together, #PikAVeer tells an active story ('She picked a brave man') using only letters already inside their names."
+      },
+      "source_name": "DJ Riz Entertainment",
+      "source_url": "https://blog.djriz.com/10-tips-for-indian-wedding-hashtags"
+    },
+    {
+      "id": 3,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Ruhi",
+          "last_name": "Kapoor",
+          "nickname": "Ruh",
+          "cultural_roots": "Punjabi / North Indian"
+        },
+        "groom": {
+          "first_name": "Samant",
+          "last_name": "Joshi",
+          "nickname": "Sam",
+          "cultural_roots": "Maharashtrian / North Indian"
+        },
+        "couple_story_and_vibe": "Soulful, deeply connected couple looking for a poetic Hindi-English fusion hashtag."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Ruhi stems from 'Ruh' (Urdu/Hindi for 'Soul'); Samant starts with 'Sam-' (phonetically close to English 'Same').",
+        "cultural_or_emotional_anchor": "The classic romantic trope 'Do Dil Ek Jaan' (Two Hearts, One Soul).",
+        "transformation_logic": "Refresh 'Do Dil Ek Jaan' by substituting 'Same' (from Samant) and 'Ruh' (from Ruhi) -> '#DoDilSameRuh' ('Two Hearts, Same Soul').",
+        "readability_and_trap_check": "13 characters, instant poetic recognition for bilingual Indian guests."
+      },
+      "target_output": {
+        "primary_hashtag": "#DoDilSameRuh",
+        "companion_variations": [
+          "#SamantKiRuh",
+          "#RuhMeetsSamant",
+          "#EkRuhWithSam"
+        ],
+        "reusable_pattern_schema": "DoDil + [Groom Name Fragment = 'Same/Ek'] + [Bride Name Fragment = 'Soul/Heart']"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RuhiAndSamantWedding",
+        "shallow_wordplay_rejected": "#RuSam2026",
+        "why_creative_choice_wins": "Instead of reducing 'Ruhi' to a meaningless syllable 'Ru', it honors the literal meaning of her name ('Soul') and pairs it with Samant ('Same') to express spiritual unity."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 4,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Siyali",
+          "last_name": "Mehta",
+          "nickname": "Siya",
+          "cultural_roots": "Punjabi / Delhi"
+        },
+        "groom": {
+          "first_name": "Parikshit",
+          "last_name": "Arora",
+          "nickname": "Pari",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Fun-loving, chaotic couple whose big fat Punjabi wedding planning has been a rollercoaster of family drama and laughter."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Siyali starts with 'Siya-'; Parikshit starts with 'Pa-'. Combined: 'Siya' + 'Pa' = 'Siyapa'.",
+        "cultural_or_emotional_anchor": "In Punjabi and Hinglish slang, 'Siyapa' means hilarious chaos, fuss, or lovable madness (popularized by films like 'Total Siyapaa').",
+        "transformation_logic": "Fuse 'Siya' (Siyali) + 'Pa' (Parikshit) into '#TotalSiyaPa', using CamelCase on the 'P' so guests immediately see both names inside the slang word.",
+        "readability_and_trap_check": "12 characters, self-deprecating humor that passes the family laugh test."
+      },
+      "target_output": {
+        "primary_hashtag": "#TotalSiyaPa",
+        "companion_variations": [
+          "#PyaarKaSiyaPa",
+          "#SiyaPaGetsHitched",
+          "#ParikshitKiSiyali"
+        ],
+        "reusable_pattern_schema": "Total + [Bride Prefix] + [Groom Prefix] == [Colloquial Slang Word for Fun Chaos]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SiyaliWedsParikshit",
+        "shallow_wordplay_rejected": "#PariSiyaForever",
+        "why_creative_choice_wins": "Turns an accidental phonetic collision ('Siya' + 'Pa' = Siyapa) into a witty, self-aware joke about the joyful madness of an Indian wedding."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 5,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Ishpreet",
+          "last_name": "Kaur",
+          "nickname": "Ishu",
+          "cultural_roots": "Punjabi Sikh"
+        },
+        "groom": {
+          "first_name": "Gunpreet",
+          "last_name": "Singh",
+          "nickname": "Gunu",
+          "cultural_roots": "Punjabi Sikh"
+        },
+        "couple_story_and_vibe": "Both share the traditional Punjabi suffix '-preet' (love), so they want a clever play on their unique prefixes ('Ish-' and 'Gun-')."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Shared suffix '-preet' makes '#IshpreetGunpreet' repetitive. Focus on prefixes: 'Ish-' (evokes 'Ishq' = passionate love) and 'Gun-' (evokes 'Gunaah' = sin/crime of passion, or 'Guna' = multiplied).",
+        "cultural_or_emotional_anchor": "Dramatic Bollywood romance dialogue: 'Agar ishq gunaah hai...' (If loving you is a crime/passion) or 'Love multiplied'.",
+        "transformation_logic": "Combine 'Ishq' (from Ishpreet) + 'Gunna' (from Gunpreet) + 'Hai' -> '#IshqGunnaHai'.",
+        "readability_and_trap_check": "13 characters, solves the common Punjabi '-preet/-deep/-inder' shared-suffix dilemma."
+      },
+      "target_output": {
+        "primary_hashtag": "#IshqGunnaHai",
+        "companion_variations": [
+          "#DoPreetEkDil",
+          "#GunpreetKaIshq",
+          "#PreetSquared"
+        ],
+        "reusable_pattern_schema": "When both names share a suffix (-preet, -deep, -jeet), drop the suffix and build a Hindi phrase from the two distinct root prefixes."
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#GunpreetWedsIshpreet",
+        "shallow_wordplay_rejected": "#GunIshPreet",
+        "why_creative_choice_wins": "Avoids the clunky repetition of '-preet' twice and transforms 'Ish' + 'Gun' into a dramatic Filmy declaration."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 6,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Aakriti",
+          "last_name": "Sharma",
+          "nickname": "Kriti",
+          "cultural_roots": "North Indian Hindu"
+        },
+        "groom": {
+          "first_name": "Sarat",
+          "last_name": "Nair",
+          "nickname": "Saru",
+          "cultural_roots": "South Indian / Malayali"
+        },
+        "couple_story_and_vibe": "Cross-cultural couple blending North and South Indian wedding customs (`Riti-Riwaaz`)."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Aakriti ends with '-riti' (Hindi/Sanskrit for custom, tradition, or sacred way of life); also shortens to 'Kriti'. Sarat sounds like 'Got' in fast English rhythm or 'Sar-'.",
+        "cultural_or_emotional_anchor": "In Hindu weddings, 'Riti-Riwaaz' represents sacred traditions. Calling the bride '#SaratKiRiti' means 'Aakriti belongs to Sarat' AND 'Sarat's sacred tradition'.",
+        "transformation_logic": "Generate a tiered set: poetic Hindi semantic play ('#SaratKiRiti') + English phonetic pun ('#SarItGetHitched' playing on 'Saw It, Got Hitched' using Sar + Kriti).",
+        "readability_and_trap_check": "12 characters (#SaratKiRiti), effortless to pronounce across both North and South Indian families."
+      },
+      "target_output": {
+        "primary_hashtag": "#SaratKiRiti",
+        "companion_variations": [
+          "#SarItGetHitched",
+          "#KritiGotSarat"
+        ],
+        "reusable_pattern_schema": "[Groom Name] + Ki + [Bride Name Suffix that means Tradition/Joy/Light in Hindi]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#AakritiWedsSarat",
+        "shallow_wordplay_rejected": "#AakSar2026",
+        "why_creative_choice_wins": "Extracts the meaningful Sanskrit root 'Riti' (tradition) from Aakriti so the hashtag carries a double meaning of love and ritual."
+      },
+      "source_name": "WeddingWire India",
+      "source_url": "https://www.weddingwire.in/wedding-tips/quirky-wedding-hashtags-created-for-couples-by-the-weddingwire-india-community--c10389"
+    },
+    {
+      "id": 7,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Saloni",
+          "last_name": "khanna",
+          "nickname": "Salu / Sa",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Raunaq",
+          "last_name": "Malhotra",
+          "nickname": "Ronny / Ro",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Die-hard romantics who want their nicknames woven into a single English-Hinglish word."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's nickname 'Ronny' starts with 'Ro-'; Bride's name 'Saloni' starts with 'Sa-'.",
+        "cultural_or_emotional_anchor": "The word 'Romantic' starts with 'Ro-', and in Hinglish, adding 'Sa' at the end of an adjective ('Romantic-sa') means 'kind of romantic / dreamy' (like the song 'Dilbara' or 'Pehla Nasha' vibe).",
+        "transformation_logic": "Wrap 'Romantic' with 'Ro' (Raunaq/Ronny) at the start and 'Sa' (Saloni) at the end -> '#RoManticSa' ('A dreamy, romantic vibe').",
+        "readability_and_trap_check": "11 characters, clever Hinglish suffix '-Sa' makes it sound like natural conversational Hindi."
+      },
+      "target_output": {
+        "primary_hashtag": "#RoManticSa",
+        "companion_variations": [
+          "#SaloniKiRaunaq",
+          "#RaunaqInSalonisLife"
+        ],
+        "reusable_pattern_schema": "[Groom Initial Prefix matching English Adjective] + [Adjective Body] + [Bride Prefix 'Sa/Si' as Hinglish Qualifier]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RaunaqWedsSaloni",
+        "shallow_wordplay_rejected": "#RauSalForever",
+        "why_creative_choice_wins": "Uses the Hinglish grammatical particle '-sa' (meaning 'dreamy/like') to turn Saloni's first syllable into a natural Hindi phrase."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 8,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Ekta",
+          "last_name": "Agarwal",
+          "nickname": "Eku",
+          "cultural_roots": "Marwari / North Indian"
+        },
+        "groom": {
+          "first_name": "Saurav",
+          "last_name": "Bansal",
+          "nickname": "Sau",
+          "cultural_roots": "Baniya / North Indian"
+        },
+        "couple_story_and_vibe": "Arranged-turned-love marriage where both feel they found their 'one in a hundred' match."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Saurav starts with 'Sau' (Hindi for 100); Ekta starts with 'Ek' (Hindi for 1, and literally means 'Unity').",
+        "cultural_or_emotional_anchor": "The Hindi idiom 'Sau mein ek' ('One in a hundred' — someone truly rare and irreplaceable).",
+        "transformation_logic": "Map 'Sau' (Saurav = 100) + 'Mein' + 'Ek' (Ekta = 1) -> '#SauMeinEk'. It praises the couple as a one-in-a-hundred match while containing both names verbatim.",
+        "readability_and_trap_check": "10 characters, numerical wordplay is universally understood across India."
+      },
+      "target_output": {
+        "primary_hashtag": "#SauMeinEk",
+        "companion_variations": [
+          "#SauravKiEkta",
+          "#EkSauEkShagun"
+        ],
+        "reusable_pattern_schema": "Exploit numerical meanings hidden in Indian names (Sau=100, Ek=1, Lakh=100k, Sahasra=1000) to form Hindi idioms."
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SauravWedsEkta",
+        "shallow_wordplay_rejected": "#SauEk2026",
+        "why_creative_choice_wins": "Recognizes the literal Hindi numbers inside 'Saurav' (Sau = 100) and 'Ekta' (Ek = 1) to craft the idiom 'One in a hundred'."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 9,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Sakshi",
+          "last_name": "Jain",
+          "nickname": "Sakshu",
+          "cultural_roots": "North Indian"
+        },
+        "groom": {
+          "first_name": "Khush",
+          "last_name": "Mehta",
+          "nickname": "Khushu",
+          "cultural_roots": "Gujarati / Jain"
+        },
+        "couple_story_and_vibe": "Bubbly, ever-smiling bride and a groom whose literal name means 'Happy'."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "'Khush' means 'Happy' in Hindi/Gujarati/Urdu. 'Sakshi' means 'Witness' (as in Agni Sakshi).",
+        "cultural_or_emotional_anchor": "Conversational Hindi sentence: 'Sakshi hui khush' ('Sakshi became happy' / 'Sakshi found her happiness in Khush').",
+        "transformation_logic": "Connect Bride's full name ('Sakshi') + Hindi linking verb ('Hui') + Groom's full name ('Khush') -> '#SAKSHIhuiKHUSH'.",
+        "readability_and_trap_check": "14 characters, zero name truncation needed because the groom's name functions as a Hindi adjective."
+      },
+      "target_output": {
+        "primary_hashtag": "#SAKSHIhuiKHUSH",
+        "companion_variations": [
+          "#KhushWithSakshi",
+          "#AgniSakshiToKhush"
+        ],
+        "reusable_pattern_schema": "When one partner's name is a Hindi adjective (Khush, Harsh, Aanand, शांत/Shant, Madhur), build a complete grammatical sentence where the adjective is both a feeling and the partner's name."
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SakshiWedsKhush",
+        "shallow_wordplay_rejected": "#SaKhush",
+        "why_creative_choice_wins": "Preserves both full names intact while reading as a natural, joyful Hindi sentence ('Sakshi is overjoyed')."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 10,
+      "category": "Bilingual Semantic Portmanteaus & Meaningful Word-Bridges",
+      "input_context": {
+        "bride": {
+          "first_name": "Shraddha",
+          "last_name": "Shinde",
+          "nickname": "Shraddhu",
+          "cultural_roots": "Maharashtrian"
+        },
+        "groom": {
+          "first_name": "Nikhil",
+          "last_name": "Pawar",
+          "nickname": "Nik",
+          "cultural_roots": "Maharashtrian"
+        },
+        "couple_story_and_vibe": "Traditional yet witty Maharashtrian couple where the groom jokes that the bride is the boss of the house."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Nikhil shortens to 'Nik'; 'Shraddha' literally means 'Faith/Devotion' in Marathi and Hindi.",
+        "cultural_or_emotional_anchor": "The formal Hindi/Marathi phrase 'Shraddha Anusaar' ('According to one's faith/wishes', often heard in temples or hospitable homes—and humorously meaning 'Whatever Shraddha says, goes!').",
+        "transformation_logic": "Combine 'Nik' (Nikhil) + 'Shraddha' + 'Anusaar' -> '#NikShraddhaAnusaar' ('Nikhil now lives according to Shraddha's wishes!').",
+        "readability_and_trap_check": "19 characters, witty cultural humor that lands with parents, priests, and friends alike."
+      },
+      "target_output": {
+        "primary_hashtag": "#NikShraddhaAnusaar",
+        "companion_variations": [
+          "#NikhilChiShraddha",
+          "#PawarFulWithShraddha"
+        ],
+        "reusable_pattern_schema": "[Groom Nickname] + [Bride Name with Sanskrit Meaning] + [Sanskrit/Hindi Postposition like 'Anusaar' / 'Swaroop']"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#NikhilWedsShraddha",
+        "shallow_wordplay_rejected": "#ShraNik2026",
+        "why_creative_choice_wins": "Plays on the temple/cultural phrase 'Yatha Shraddha Anusaar' to affectionately joke that Nikhil now follows Shraddha's lead."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 11,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Simran",
+          "last_name": "Kaur",
+          "nickname": "Sim",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Rishi",
+          "last_name": "Kapoor",
+          "nickname": "Rish",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Simran is a flight attendant marrying her longtime sweetheart Rishi."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Simran shortens to 'Sim'; Rishi shortens to 'Rish' (rhymes with 'Wish').",
+        "cultural_or_emotional_anchor": "The fairytale English phrase 'She gets her wish'.",
+        "transformation_logic": "Substitute 'Sim' for 'She' and 'Rish' for 'Wish' -> '#SimGetsHerRish'. The vowel and consonant endings ('-ish') align so closely that the brain hears 'Sim gets her wish' immediately.",
+        "readability_and_trap_check": "15 characters, crisp 4-beat cadence, zero spelling confusion."
+      },
+      "target_output": {
+        "primary_hashtag": "#SimGetsHerRish",
+        "companion_variations": [
+          "#RishComeTrueForSim",
+          "#FlyingIntoRish"
+        ],
+        "reusable_pattern_schema": "[Bride Short Name] + GetsHer + [Groom Short Name rhyming with Wish/Dream/King]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SimranWedsRishi",
+        "shallow_wordplay_rejected": "#SimRish2026",
+        "why_creative_choice_wins": "Transforms 'Rish' into the emotional payoff of 'Wish', giving the hashtag a fairy-tale narrative arc in four short words."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 12,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Ridhima",
+          "last_name": "chopra",
+          "nickname": "Ridhi",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Kunal",
+          "last_name": "Gogna",
+          "nickname": "Kunu",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "High-energy couple who love travel, adventure, and action-packed celebrations."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's first name 'Ridhi' sounds like 'Ready'; Groom's surname 'Gogna' starts with 'Go-'.",
+        "cultural_or_emotional_anchor": "The universal countdown phrase 'Ready, Set, Go!'",
+        "transformation_logic": "Map 'Ready' -> 'Ridhi', keep 'Set', and map 'Go' -> 'Gogna' -> '#RidhiSetGogna'. Alternatively, using the groom's first name: '#KunalGetsRidhi' ('Kunal gets ready').",
+        "readability_and_trap_check": "14 characters, high energy, incorporates both the bride's first name and her new married surname."
+      },
+      "target_output": {
+        "primary_hashtag": "#RidhiSetGogna",
+        "companion_variations": [
+          "#KunalGetsRidhi",
+          "#BornRidhiForKunal"
+        ],
+        "reusable_pattern_schema": "[Name sounding like 'Ready' (Ridhi/Reddy/Riddhi)] + Set + [Name starting with 'Go-' (Gogna/Goel/Gowda/Gopal)]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#KunalWedsRidhima",
+        "shallow_wordplay_rejected": "#KuRidhiGogna",
+        "why_creative_choice_wins": "Simultaneously puns on two separate names ('Ridhi' = Ready, 'Gogna' = Go) inside a single 3-word English idiom."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 13,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Sandeep",
+          "last_name": "Gill",
+          "nickname": "Sandy",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Prabhjot",
+          "last_name": "Sandhu",
+          "nickname": "Prabby",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Prabby is famous in their friend group for being rambunctious, mischievous, and full of chaotic energy, while Sandy is the calm anchor."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Nicknames are 'Sandy' and 'Prabby' ('Prab-' sounds like 'Prob-' in 'Problem', especially with a Punjabi accent!).",
+        "cultural_or_emotional_anchor": "Affectionate roast among friends that Prabby's shenanigans are officially Sandy's problem for life.",
+        "transformation_logic": "Combine 'Sandys' + 'Prab' (Prabby) + 'lem' -> '#SandysPrablem'.",
+        "readability_and_trap_check": "14 characters, hilarious because it is hyper-specific to the groom's real personality."
+      },
+      "target_output": {
+        "primary_hashtag": "#SandysPrablem",
+        "companion_variations": [
+          "#NoPrablemWithSandy",
+          "#SandyTamedPrabby"
+        ],
+        "reusable_pattern_schema": "[Bride Possessive Nickname] + [Groom Prefix 'Prab/Prob'] + lem (Best when groom is the jokester)"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SandeepWedsPrabhjot",
+        "shallow_wordplay_rejected": "#SanPrab2026",
+        "why_creative_choice_wins": "Captures the couple's actual relationship dynamic and nicknames ('Sandy' and 'Prabby') rather than struggling with formal names."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 14,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Navneet",
+          "last_name": "Kaur",
+          "nickname": "Nav",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Rohan",
+          "last_name": "Rai",
+          "nickname": "Ro",
+          "cultural_roots": "North Indian"
+        },
+        "couple_story_and_vibe": "After years of dating, Nav finally found her 'Mr. Right' in Mr. Rai."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's nickname is 'Nav'; Groom's surname is 'Rai' (pronounced identically to the first syllable of 'Right').",
+        "cultural_or_emotional_anchor": "The classic romantic phrase 'She found Mr. Right'.",
+        "transformation_logic": "Replace 'Right' with 'Rai' -> '#NavFindsMrRai'.",
+        "readability_and_trap_check": "14 characters, punchline lands on the final word ('Rai')."
+      },
+      "target_output": {
+        "primary_hashtag": "#NavFindsMrRai",
+        "companion_variations": [
+          "#AlwaysTheRaiOneForNav",
+          "#NavAndRoGoRai"
+        ],
+        "reusable_pattern_schema": "[Bride Name] + FindsMr + [Surname sounding like 'Right' (Rai/Ray/Roy/Rao)]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#NavneetWedsRohan",
+        "shallow_wordplay_rejected": "#NavRoRai",
+        "why_creative_choice_wins": "Uses the phonetic identity between 'Mr. Rai' and 'Mr. Right' to deliver an instant romantic payoff."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 15,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Sanjana",
+          "last_name": "Arora",
+          "nickname": "Sanj",
+          "cultural_roots": "Punjabi / Delhi"
+        },
+        "groom": {
+          "first_name": "Vikram",
+          "last_name": "Beri",
+          "nickname": "Vik",
+          "cultural_roots": "Punjabi Khatri"
+        },
+        "couple_story_and_vibe": "Outdoorsy, sweet couple hosting a summer garden and vineyard wedding."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Sanjana shortens to 'Sanj'; Groom's surname 'Beri' is a homophone for 'Berry'.",
+        "cultural_or_emotional_anchor": "Whimsical imagery of picking the sweetest berry in the patch.",
+        "transformation_logic": "Combine 'Sanj' + 'PickedA' + 'Beri' -> '#SanjPickedABeri'.",
+        "readability_and_trap_check": "16 characters, playful and wholesome."
+      },
+      "target_output": {
+        "primary_hashtag": "#SanjPickedABeri",
+        "companion_variations": [
+          "#BeriMuchInLoveWithSanj",
+          "#TheSweetestBeriForSanj"
+        ],
+        "reusable_pattern_schema": "[Bride Nickname] + [Action Verb] + [Groom Surname Homophone for Fruit/Gem/Object]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SanjanaWedsVikram",
+        "shallow_wordplay_rejected": "#SanjVikBeri",
+        "why_creative_choice_wins": "Treats the surname 'Beri' as a vivid visual noun ('Berry') to create a charming action sentence."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 16,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Anamika",
+          "last_name": "Singhvi",
+          "nickname": "Anu",
+          "cultural_roots": "Rajasthani / Marwari"
+        },
+        "groom": {
+          "first_name": "Abhishek",
+          "last_name": "Vanigota",
+          "nickname": "Abhi",
+          "cultural_roots": "Gujarati"
+        },
+        "couple_story_and_vibe": "Cross-cultural Marwari-Gujarati wedding with a musical Sangeet night."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom is 'Abhi', surname ends in '-gota' (sounds like 'gotta'); Bride's surname 'Singhvi' starts with 'Singh' (sounds like 'Sing').",
+        "cultural_or_emotional_anchor": "High-energy Sangeet vibe: 'Abhi's gotta sing!' while also meaning 'Abhishek Vanigota got a Singhvi!'",
+        "transformation_logic": "Fuse 'Abhi' (Abhishek) + 'Gota' (from Vanigota) + 'Singh' (from Singhvi) -> '#AbhiGotaSingh'.",
+        "readability_and_trap_check": "14 characters, triple-layered portmanteau combining groom's first name, groom's surname suffix, and bride's surname prefix!"
+      },
+      "target_output": {
+        "primary_hashtag": "#AbhiGotaSingh",
+        "companion_variations": [
+          "#AnamikaKiAbhiShuruat",
+          "#SinghviGetsVanigota"
+        ],
+        "reusable_pattern_schema": "[Groom Nickname] + [Groom Surname Suffix = Verb 'Gotta'] + [Bride Surname Prefix = Noun/Verb 'Sing/Ring']"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#AbhishekWedsAnamika",
+        "shallow_wordplay_rejected": "#AbhiAnu2026",
+        "why_creative_choice_wins": "Weaves three distinct name elements (Abhi + Vanigota + Singhvi) into a single witty English-Hinglish double entendre."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 17,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Archi",
+          "last_name": "Patel",
+          "nickname": "Archu",
+          "cultural_roots": "Gujarati"
+        },
+        "groom": {
+          "first_name": "Sumit",
+          "last_name": "Shah",
+          "nickname": "Sumi",
+          "cultural_roots": "Gujarati"
+        },
+        "couple_story_and_vibe": "Aesthetic, photography-loving couple who want their hashtag to feel like a timeless memory album."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's name 'Archi' is the exact root of the English word 'Archives'; Groom's name 'Sumit' shortens to 'Sumi'.",
+        "cultural_or_emotional_anchor": "A wedding hashtag's literal job on Instagram is to serve as the 'archives' of the couple's memories.",
+        "transformation_logic": "Expand 'Archi' into 'Archives' + 'Of' + 'Sumi' -> '#ArchivesOfSumi' (or '#ArchiVesOfSumit', capitalizing the V to highlight Archi's name).",
+        "readability_and_trap_check": "15 characters, poetic and meta-aware of what a wedding hashtag is for."
+      },
+      "target_output": {
+        "primary_hashtag": "#ArchivesOfSumi",
+        "companion_variations": [
+          "#SumitFoundHisArchi",
+          "#ArchiAndSumiInLove"
+        ],
+        "reusable_pattern_schema": "[Bride Name embedded inside an English Noun about Memories/Stories] + Of + [Groom Name]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SumitWedsArchi",
+        "shallow_wordplay_rejected": "#SumArch2026",
+        "why_creative_choice_wins": "#SumArch2026 sounds like 'Some Arch'. #ArchivesOfSumi hides the bride's full name inside the poetic word 'Archives'."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 18,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Ria",
+          "last_name": "Bector",
+          "nickname": "Ria",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Hardik",
+          "last_name": "Saini",
+          "nickname": "Hardy",
+          "cultural_roots": "Punjabi / Haryanvi"
+        },
+        "couple_story_and_vibe": "Madly in love couple looking for an effortless surname pun that guests will remember after one drink."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's surname 'Saini' (pronounced 'Say-nee') matches the middle syllables of 'Insanely' ('In-sain-ly').",
+        "cultural_or_emotional_anchor": "The romantic phrase 'Insanely in love'.",
+        "transformation_logic": "Embed 'Saini' inside 'Insanely' -> '#InSainilyInLove' (or '#RiaInSainilyInLove').",
+        "readability_and_trap_check": "15 characters, CamelCase highlights 'Saini' inside 'InSainily'."
+      },
+      "target_output": {
+        "primary_hashtag": "#InSainilyInLove",
+        "companion_variations": [
+          "#RiaInSainilyInLove",
+          "#HardikGotHisRia"
+        ],
+        "reusable_pattern_schema": "In + [Surname sounding like 'Sane' (Saini/Sane/Sahni)] + lyInLove"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RiaWedsHardik",
+        "shallow_wordplay_rejected": "#HarRiaSaini",
+        "why_creative_choice_wins": "Seamless phonetic embedding where the surname 'Saini' powers the emotional adverb 'Insanely'."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 19,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Aashka",
+          "last_name": "Shah",
+          "nickname": "Aashu",
+          "cultural_roots": "Gujarati"
+        },
+        "groom": {
+          "first_name": "Parth",
+          "last_name": "Seth",
+          "nickname": "Parthu",
+          "cultural_roots": "Gujarati"
+        },
+        "couple_story_and_vibe": "Young, cheeky Gujarati couple with a millennial/Gen-Z friend group who want a bold cocktail-party hashtag."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's surname 'Shah' sounds like 'Saw'; Groom's surname 'Seth' sounds like 'That/Shit' in fast party banter.",
+        "cultural_or_emotional_anchor": "Playful disbelief expression 'You saw that!' / 'Shah meets Seth'.",
+        "transformation_logic": "Map 'Saw' -> 'Shah' and 'Seth' at the end -> '#YouShahThatSeth' for the cocktail/youngsters party, paired with '#Shah4Seth' for family invitations.",
+        "readability_and_trap_check": "Provides dual-tier adaptability: edgy for the cocktail bar sign, clean for the formal Gujarati Kankotri invite."
+      },
+      "target_output": {
+        "primary_hashtag": "#YouShahThatSeth",
+        "companion_variations": [
+          "#Shah4Seth",
+          "#ParthKiAashka"
+        ],
+        "reusable_pattern_schema": "You + [Surname_1 = 'Saw'] + That + [Surname_2]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#ShahWedsSeth",
+        "shallow_wordplay_rejected": "#Seah2026",
+        "why_creative_choice_wins": "Gives two ultra-common Gujarati/Marwari surnames (Shah and Seth) a fresh, conversational voice instead of a dry merger."
+      },
+      "source_name": "DJ Riz Entertainment",
+      "source_url": "https://blog.djriz.com/10-tips-for-indian-wedding-hashtags"
+    },
+    {
+      "id": 20,
+      "category": "Phonetic Idiom & Pop-Culture Subversions",
+      "input_context": {
+        "bride": {
+          "first_name": "Zoya",
+          "last_name": "Mirza",
+          "nickname": "Zo",
+          "cultural_roots": "Hyderabadi / Muslim"
+        },
+        "groom": {
+          "first_name": "Ayaan",
+          "last_name": "Siddiqui",
+          "nickname": "Ayu",
+          "cultural_roots": "Lucknowi / Muslim"
+        },
+        "couple_story_and_vibe": "Regal Nikah and Walima celebration with a timeless romantic theme."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's surname 'Siddiqui' ends with a stressed '-key' sound ('Sid-di-qui').",
+        "cultural_or_emotional_anchor": "The romantic idiom 'The key to her heart'.",
+        "transformation_logic": "Replace 'key' with 'Siddiqui' -> '#TheSiddiquiToZoyasHeart' or '#TheSiddiquiToHerHeart'.",
+        "readability_and_trap_check": "21 characters, unmistakable phonetic pun on the final syllable '-qui' ('key')."
+      },
+      "target_output": {
+        "primary_hashtag": "#TheSiddiquiToHerHeart",
+        "companion_variations": [
+          "#TheSiddiquiToZoyasHeart",
+          "#ReadySetSiddiqui"
+        ],
+        "reusable_pattern_schema": "The + [Surname ending in '-ki/-qui' (Siddiqui/Solanki/Choksi)] + ToHerHeart"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#AyaanWedsZoya",
+        "shallow_wordplay_rejected": "#ZoyAyaan",
+        "why_creative_choice_wins": "Unlocks the musical '-key' ending of a three-syllable surname that traditional hashtag generators fail to rhyme."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 21,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Meera",
+          "last_name": "Kapoor",
+          "nickname": "Meeru",
+          "cultural_roots": "Punjabi Hindu"
+        },
+        "groom": {
+          "first_name": "Vikramjeet",
+          "last_name": "Singh",
+          "nickname": "Vikram",
+          "cultural_roots": "Punjabi Sikh / Rajput"
+        },
+        "couple_story_and_vibe": "Meera is taking the surname Singh after marriage and loves pop music and dancing."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Married surname 'Singh' rhymes with 'Ring'.",
+        "cultural_or_emotional_anchor": "Beyoncé's global anthem 'Single Ladies (If you liked it then you shoulda put a ring on it)'.",
+        "transformation_logic": "Substitute 'Singh' for 'Ring' -> '#HePutASinghOnIt' (or personalized with bride's name: '#VikramPutASinghOnMeera').",
+        "readability_and_trap_check": "16 characters, universally recognized across all age groups."
+      },
+      "target_output": {
+        "primary_hashtag": "#HePutASinghOnIt",
+        "companion_variations": [
+          "#VikramPutASinghOnMeera",
+          "#MeeraStartsSinghing"
+        ],
+        "reusable_pattern_schema": "HePutA + [Surname rhyming with 'Ring' (Singh/King)] + OnIt"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#VikramjeetWedsMeera",
+        "shallow_wordplay_rejected": "#VeeMeeSingh",
+        "why_creative_choice_wins": "Celebrates both the engagement ring and the bride's new surname in a single pop-culture hook."
+      },
+      "source_name": "PlanEvents.ca & Eternal Weddingz",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 22,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Divya",
+          "last_name": "Singhal",
+          "nickname": "Divi",
+          "cultural_roots": "Agarwal / North Indian"
+        },
+        "groom": {
+          "first_name": "Arpit",
+          "last_name": "Garg",
+          "nickname": "Arpu",
+          "cultural_roots": "North Indian"
+        },
+        "couple_story_and_vibe": "Divya Singhal is changing her last name after marrying Arpit, creating a natural double-meaning around leaving both singlehood and her maiden surname."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Maiden surname 'Singhal' is pronounced almost identically to the English word 'Single'.",
+        "cultural_or_emotional_anchor": "Transitioning from being 'Single' (and a 'Singhal') to married life.",
+        "transformation_logic": "Frame the double meaning directly: '#DivyaIsNoLongerSinghal' or '#NoLongerSinghal'.",
+        "readability_and_trap_check": "15-22 characters, true double entendre where both literal meanings are 100% factual."
+      },
+      "target_output": {
+        "primary_hashtag": "#NoLongerSinghal",
+        "companion_variations": [
+          "#DivyaNoLongerSinghal",
+          "#SinghalToTakenByArpit"
+        ],
+        "reusable_pattern_schema": "[Bride Name] + NoLonger + [Maiden Surname sounding like 'Single' (Singhal/Singla)]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#DivyaWedsArpit",
+        "shallow_wordplay_rejected": "#DivArp2026",
+        "why_creative_choice_wins": "Operates on two factual levels simultaneously: she is no longer unmarried (single) and no longer carries her maiden surname (Singhal)."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 23,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Priyal",
+          "last_name": "Patel",
+          "nickname": "Priyu",
+          "cultural_roots": "Gujarati"
+        },
+        "groom": {
+          "first_name": "Dhruv",
+          "last_name": "Patel",
+          "nickname": "Dhru",
+          "cultural_roots": "Gujarati"
+        },
+        "couple_story_and_vibe": "Both the bride and groom already have the last name Patel, which often stumps standard generators."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Shared surname 'Patel' ends with '-tel' (sounds like 'Tale').",
+        "cultural_or_emotional_anchor": "A fairytale romance ('A Love Tale').",
+        "transformation_logic": "When both share the surname Patel, turn the shared surname into the centerpiece: '#ALovePatel' (or '#DhruvAndPriyalLovePatel').",
+        "readability_and_trap_check": "11 characters, elegant solution to the shared-Gujarati-surname challenge."
+      },
+      "target_output": {
+        "primary_hashtag": "#ALovePatel",
+        "companion_variations": [
+          "#PriyalAndDhruvsLovePatel",
+          "#PatelSquaredInLove"
+        ],
+        "reusable_pattern_schema": "ALove + [Shared Surname ending in '-tel' (Patel)] (Play on 'A Love Tale')"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#PatelWedsPatel",
+        "shallow_wordplay_rejected": "#PriDhruvPatel",
+        "why_creative_choice_wins": "Transforms the redundancy of 'Patel Weds Patel' into a poetic pun on 'A Love Tale'."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 24,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Harleen",
+          "last_name": "Gill",
+          "nickname": "Harlu",
+          "cultural_roots": "Punjabi Jatt Sikh"
+        },
+        "groom": {
+          "first_name": "Manpreet",
+          "last_name": "Gill",
+          "nickname": "Manu",
+          "cultural_roots": "Punjabi Jatt Sikh"
+        },
+        "couple_story_and_vibe": "Both bride and groom have the surname Gill and want a warm Punjabi rhyme."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Two ('Do') Gills; 'Gill' rhymes perfectly with 'Dil' (Heart in Hindi/Punjabi).",
+        "cultural_or_emotional_anchor": "Punjabi phrase 'Do Dil Ek Jaan' adapted for two Gills uniting as one heart.",
+        "transformation_logic": "Count the two Gills ('Do Gill') and rhyme with one heart ('Ek Dil') -> '#DoGillEkDil'.",
+        "readability_and_trap_check": "11 characters, symmetrical 4-beat cadence ('Do Gill, Ek Dil')."
+      },
+      "target_output": {
+        "primary_hashtag": "#DoGillEkDil",
+        "companion_variations": [
+          "#HarleenManpreetEkDil",
+          "#GillMeetsGill"
+        ],
+        "reusable_pattern_schema": "Do + [Shared Surname rhyming with Dil (Gill/Dhillon)] + EkDil"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#GillWedsGill",
+        "shallow_wordplay_rejected": "#HarManGill",
+        "why_creative_choice_wins": "Uses internal rhyme ('Gill' / 'Dil') and numerical contrast ('Do' = Two / 'Ek' = One) for poetic symmetry."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 25,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Bani",
+          "last_name": "Sandhu",
+          "nickname": "Bani",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Zorawar",
+          "last_name": "Gill",
+          "nickname": "Zora",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Homebody couple who love cozy movie nights, memes, and binge-watching series together."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's surname 'Gill' rhymes with 'Chill'.",
+        "cultural_or_emotional_anchor": "Pop-culture phrase 'Netflix and Chill' reflecting their favorite date-night ritual.",
+        "transformation_logic": "Replace 'Chill' with 'Gill' -> '#NetflixAndGill' (or '#BaniFoundHerNetflixAndGill').",
+        "readability_and_trap_check": "15 characters, instant laugh from millennial and Gen-Z guests."
+      },
+      "target_output": {
+        "primary_hashtag": "#NetflixAndGill",
+        "companion_variations": [
+          "#BaniAndZorasNetflixAndGill",
+          "#LicenseToGill"
+        ],
+        "reusable_pattern_schema": "NetflixAnd + [Surname rhyming with 'Chill' (Gill/Shergill)]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#ZorawarWedsBani",
+        "shallow_wordplay_rejected": "#ZoraBaniGill",
+        "why_creative_choice_wins": "Connects the groom's surname directly to the couple's real-life hobby of binge-watching shows together."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 26,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Sareen",
+          "last_name": "Kaur",
+          "nickname": "Saru",
+          "cultural_roots": "Punjabi Sikh"
+        },
+        "groom": {
+          "first_name": "Parth",
+          "last_name": "Bhatia",
+          "nickname": "Parth",
+          "cultural_roots": "Punjabi Hindu"
+        },
+        "couple_story_and_vibe": "Parth feels like he hit the jackpot marrying Sareen Kaur."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's Sikh middle/last name 'Kaur' (pronounced 'Kor') sounds like 'Score' when preceded by 'S-'.",
+        "cultural_or_emotional_anchor": "Sports/victory idiom 'He scores!' celebrating the groom winning the bride's heart.",
+        "transformation_logic": "Combine 'He' + 'S' + 'Kaurs' -> '#HeSKaurs' (or '#ParthSKaursSareen').",
+        "readability_and_trap_check": "9 characters, clever capitalization ('#HeSKaurs') makes the pun visually unmistakable."
+      },
+      "target_output": {
+        "primary_hashtag": "#HeSKaurs",
+        "companion_variations": [
+          "#ParthSKaursSareen",
+          "#KaurBlimeyItsParth"
+        ],
+        "reusable_pattern_schema": "[Groom Name / 'He'] + S + Kaurs (Play on 'Scores')"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#ParthWedsSareen",
+        "shallow_wordplay_rejected": "#SaParth2026",
+        "why_creative_choice_wins": "Honors the bride's Sikh identity ('Kaur') with an upbeat celebratory pun ('He scores!')."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 27,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Neha",
+          "last_name": "Sharma",
+          "nickname": "Nehu",
+          "cultural_roots": "North Indian"
+        },
+        "groom": {
+          "first_name": "Akshay",
+          "last_name": "Kumar",
+          "nickname": "Akki",
+          "cultural_roots": "North Indian"
+        },
+        "couple_story_and_vibe": "Starry evening outdoor reception with fairy lights and sparklers."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's surname 'Kumar' ends with '-mar' (rhymes with 'Star').",
+        "cultural_or_emotional_anchor": "The dreamy fairytale phrase 'Wish upon a star'.",
+        "transformation_logic": "Substitute 'Kumar' for 'a star' -> '#WishUponKumar' (or '#NehaWishedUponKumar').",
+        "readability_and_trap_check": "14 characters, matches the starry-night reception aesthetic."
+      },
+      "target_output": {
+        "primary_hashtag": "#WishUponKumar",
+        "companion_variations": [
+          "#NehaWishedUponKumar",
+          "#AkshayKiNeha"
+        ],
+        "reusable_pattern_schema": "WishUpon + [Surname rhyming with 'Star' (Kumar/Parmar/Brar/Thapar)]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#AkshayWedsNeha",
+        "shallow_wordplay_rejected": "#AkNehKumar",
+        "why_creative_choice_wins": "Elevates one of India's most common surnames ('Kumar') into a whimsical fairytale phrase."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 28,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Ramandeep",
+          "last_name": "Sandhu",
+          "nickname": "Raman",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Sandeep",
+          "last_name": "Brar",
+          "nickname": "Sandy",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Both share the '-deep' suffix (Ramandeep & Sandeep), so they need a creative surname hook using 'Brar'."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "First names both end in '-deep'; Groom's surname 'Brar' rhymes directly with 'Star' and 'Bar'.",
+        "cultural_or_emotional_anchor": "Dual option: dreamy ('Wish upon a star') for the Anand Karaj, or party-ready ('Raise the bar') for the reception.",
+        "transformation_logic": "Create '#WishUponABrar' for the main wedding tag and '#DeepInLoveWithBrar' (playing on their shared '-deep' suffix).",
+        "readability_and_trap_check": "14 characters, bypasses the awkward '#RamandeepSandeep' repetition."
+      },
+      "target_output": {
+        "primary_hashtag": "#WishUponABrar",
+        "companion_variations": [
+          "#DeepInLoveWithBrar",
+          "#RaisingTheBrarWithRaman"
+        ],
+        "reusable_pattern_schema": "WishUponA + [Surname rhyming with 'Star' (Brar)] OR DeepInLove (when both names end in -deep)"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RamandeepWedsSandeep",
+        "shallow_wordplay_rejected": "#RamanSanDeep",
+        "why_creative_choice_wins": "Recognizes that combining two '-deep' names is clunky and pivots to the musical rhyme of 'Brar' and the shared meaning of 'Deep' ('Deep in love')."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 29,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Gurjit",
+          "last_name": "Kaur",
+          "nickname": "Ginny",
+          "cultural_roots": "Punjabi Sikh"
+        },
+        "groom": {
+          "first_name": "Nirmolak",
+          "last_name": "Bajaj",
+          "nickname": "Molak",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Gurjit's first name and Nirmolak's first name are tough to rhyme, and Gurjit is adopting the surname Bajaj after marriage."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "First names 'Gurjit' and 'Nirmolak' resist easy portmanteaus. New surname 'Bajaj' alliterates strongly with 'Bachelorette' / 'Bride'.",
+        "cultural_or_emotional_anchor": "The bride's transition from her single bachelorette era to becoming Mrs. Bajaj, plus the iconic Indian brand slogan 'Hamara Bajaj'.",
+        "transformation_logic": "Build '#BacheloretteToBajaj' for the bridal journey and '#GurjitKiHamaraBajaj' as a nostalgic Indian pop-culture nod.",
+        "readability_and_trap_check": "19 characters, clean alliteration solves non-rhyming first names."
+      },
+      "target_output": {
+        "primary_hashtag": "#BacheloretteToBajaj",
+        "companion_variations": [
+          "#HamaraBajajWithGurjit",
+          "#BecomingABajaj"
+        ],
+        "reusable_pattern_schema": "When first names are phonetically complex (e.g., Nirmolak), pivot to alliteration between a bridal milestone ('Bachelorette/Bride') and the married surname."
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#NirmolakWedsGurjit",
+        "shallow_wordplay_rejected": "#NirGur2026",
+        "why_creative_choice_wins": "Demonstrates strategic pivot: instead of forcing an awkward mashup like '#NirGur', it uses crisp alliteration on the married surname 'Bajaj'."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 30,
+      "category": "Surname & Identity Double-Entendres",
+      "input_context": {
+        "bride": {
+          "first_name": "Saira",
+          "last_name": "Kapoor",
+          "nickname": "Sai",
+          "cultural_roots": "Punjabi / Mumbai"
+        },
+        "groom": {
+          "first_name": "Mufaiz",
+          "last_name": "Khan",
+          "nickname": "Mufi",
+          "cultural_roots": "Mumbai / Pathan"
+        },
+        "couple_story_and_vibe": "Interfaith college sweethearts getting married after a long courtship that surprised everyone."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's surname 'Khan' sounds like the English modal verb 'Can'.",
+        "cultural_or_emotional_anchor": "Joyful disbelief that the big day is finally here ('Can you believe it?!').",
+        "transformation_logic": "Replace 'Can' with 'Khan' -> '#KhanYouBelieveIt' (or '#SairaAndMufaizKhanDoIt').",
+        "readability_and_trap_check": "16 characters, upbeat and immediately understood."
+      },
+      "target_output": {
+        "primary_hashtag": "#KhanYouBelieveIt",
+        "companion_variations": [
+          "#YesWeKhanWithSaira",
+          "#SairaKiMufaizKhanKahani"
+        ],
+        "reusable_pattern_schema": "Khan + YouBelieveIt (Play on 'Can You Believe It')"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#MufaizWedsSaira",
+        "shallow_wordplay_rejected": "#MufSaiKhan",
+        "why_creative_choice_wins": "Turns the surname 'Khan' into an active verb ('Can') to express the couple's excitement."
+      },
+      "source_name": "DJ Riz Entertainment",
+      "source_url": "https://blog.djriz.com/10-tips-for-indian-wedding-hashtags"
+    },
+    {
+      "id": 31,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Simran",
+          "last_name": "Handa",
+          "nickname": "Simi",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Rohan",
+          "last_name": "Gill",
+          "nickname": "Ro",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "90s Bollywood superfans whose Sangeet is packed with Shah Rukh Khan choreography."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's surname 'Gill' rhymes with 'Dil' (Heart); Bride's name is 'Simran' (iconic DDLJ heroine).",
+        "cultural_or_emotional_anchor": "Yash Chopra's classic film 'Dil Toh Pagal Hai' ('The Heart Is Crazy').",
+        "transformation_logic": "Replace 'Dil' with 'Gill' -> '#GillTohPagalHai' (and for Simran's bridal entry: '#GoSimranGoToGill').",
+        "readability_and_trap_check": "15 characters, every Indian guest knows the melody of 'Dil Toh Pagal Hai'."
+      },
+      "target_output": {
+        "primary_hashtag": "#GillTohPagalHai",
+        "companion_variations": [
+          "#SimranKaGillPagalHai",
+          "#GoSimranGo"
+        ],
+        "reusable_pattern_schema": "[Surname rhyming with 'Dil' (Gill)] + TohPagalHai"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RohanWedsSimran",
+        "shallow_wordplay_rejected": "#RoSimGill",
+        "why_creative_choice_wins": "Triggers instant musical nostalgia by swapping a single consonant ('D' -> 'G') in one of Bollywood's most famous titles."
+      },
+      "source_name": "PlanEvents.ca & Eternal Weddingz",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 32,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Anjali",
+          "last_name": "Verma",
+          "nickname": "Anju",
+          "cultural_roots": "North Indian"
+        },
+        "groom": {
+          "first_name": "Sahil",
+          "last_name": "Kukreja",
+          "nickname": "Sahil",
+          "cultural_roots": "Punjabi Arora/Khatri"
+        },
+        "couple_story_and_vibe": "Best friends turned soulmates (just like Rahul and Anjali in Kuch Kuch Hota Hai), and the groom's surname is Kukreja."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "'Kukreja' starts with the hard 'Kuk-' sound and has the bouncy cadence of 'Kuch Kuch'; Bride's name is literally 'Anjali'.",
+        "cultural_or_emotional_anchor": "Karan Johar's 'Kuch Kuch Hota Hai', where friendship turns into love.",
+        "transformation_logic": "Substitute 'Kukreja' for 'Kuch Kuch' -> '#KukrejaHotaHai' (and '#AnjaliKoKukrejaHotaHai').",
+        "readability_and_trap_check": "15 characters, turns an un-rhymeable surname ('Kukreja') into a beloved Bollywood hook."
+      },
+      "target_output": {
+        "primary_hashtag": "#KukrejaHotaHai",
+        "companion_variations": [
+          "#AnjaliKoKukrejaHotaHai",
+          "#SahilKiAnjali"
+        ],
+        "reusable_pattern_schema": "[Multi-syllable Surname starting with 'K' (Kukreja/Khurana/Kapadia)] + HotaHai"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SahilWedsAnjali",
+        "shallow_wordplay_rejected": "#SaAnjKukreja",
+        "why_creative_choice_wins": "Solves a notoriously difficult surname ('Kukreja') by matching its rhythm and alliteration to 'Kuch Kuch Hota Hai', especially fitting for a bride named Anjali."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 33,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Riya",
+          "last_name": "Sen",
+          "nickname": "Riyu",
+          "cultural_roots": "Bengali / North Indian"
+        },
+        "groom": {
+          "first_name": "Aman",
+          "last_name": "Mehra",
+          "nickname": "Aman",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Sweet arranged-meets-love match where both families feel their pairing was destined from above."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's name 'Riya' fits the 2-syllable trochaic meter of 'Jodi' at the end of 'Rab Ne Bana Di Jodi'.",
+        "cultural_or_emotional_anchor": "The hit Bollywood film 'Rab Ne Bana Di Jodi' ('A Match Made by God').",
+        "transformation_logic": "Personalize the film title with the couple's names -> '#RabNeBanaDiRiya' or '#AmanKiRabNeBanaDiRiya'.",
+        "readability_and_trap_check": "16 characters, warm and blessing-filled for elders."
+      },
+      "target_output": {
+        "primary_hashtag": "#RabNeBanaDiRiya",
+        "companion_variations": [
+          "#AmanKiRabNeBanaDiRiya",
+          "#RiyaWedsAman"
+        ],
+        "reusable_pattern_schema": "RabNeBanaDi + [2-Syllable Bride Name ending in '-ya/-ia' (Riya/Priya/Siya/Diya)]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#AmanWedsRiya",
+        "shallow_wordplay_rejected": "#AmRiy2026",
+        "why_creative_choice_wins": "Replaces 'Jodi' with 'Riya' at the climax of a universally loved Bollywood title."
+      },
+      "source_name": "Sumaroh & Wedd.ai",
+      "source_url": "https://sumaroh.com/posts/the-ultimate-guide-to-wedding-hashtags-for-indian-couples"
+    },
+    {
+      "id": 34,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Rohini",
+          "last_name": "Iyer",
+          "nickname": "Ro",
+          "cultural_roots": "Tamil Brahmin"
+        },
+        "groom": {
+          "first_name": "Shubham",
+          "last_name": "Tiwari",
+          "nickname": "Shubh",
+          "cultural_roots": "North Indian"
+        },
+        "couple_story_and_vibe": "Unapologetically desi couple who love street food, indie Hindi music, and vibrant Jaipur wedding decor."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's nickname 'Shubh' (meaning auspicious) sounds nearly identical to 'Shuddh' (pure); Bride's nickname 'Ro' starts the word 'Romance'.",
+        "cultural_or_emotional_anchor": "The Bollywood rom-com 'Shuddh Desi Romance'.",
+        "transformation_logic": "Map 'Shubh' (Shubham) + 'Desi' + 'Ro' (Rohini) + 'mance' -> '#ShubhDesiRoMance' (or '#ShudhDesiRomance').",
+        "readability_and_trap_check": "16 characters, embeds BOTH the groom's nickname ('Shubh') and the bride's prefix ('Ro-') inside a famous movie title."
+      },
+      "target_output": {
+        "primary_hashtag": "#ShubhDesiRoMance",
+        "companion_variations": [
+          "#ShudhDesiRomance",
+          "#ShubhamKiRohini"
+        ],
+        "reusable_pattern_schema": "[Groom Name 'Shubh'] + Desi + [Bride Prefix 'Ro-'] + Mance"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#ShubhamWedsRohini",
+        "shallow_wordplay_rejected": "#ShuRo2026",
+        "why_creative_choice_wins": "Dual phonetic injection: 'Shubh' replaces 'Shuddh' (adding the meaning 'auspicious') and 'Ro' highlights 'Rohini' inside 'Romance'."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 35,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Isha",
+          "last_name": "Desai",
+          "nickname": "Ishu",
+          "cultural_roots": "Gujarati"
+        },
+        "groom": {
+          "first_name": "Vishwa",
+          "last_name": "Rao",
+          "nickname": "Vishu",
+          "cultural_roots": "Kannada / South Indian"
+        },
+        "couple_story_and_vibe": "High-school sweethearts whose wedding is a youthful, music-filled celebration."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "'Isha' looks and sounds like 'Ishq' (Love); 'Vishwa' ends in '-wa' (leading directly into 'Wala' = 'Ishq Wala Love').",
+        "cultural_or_emotional_anchor": "The chartbuster romantic song 'Ishq Wala Love' from 'Student of the Year'.",
+        "transformation_logic": "Fuse 'Isha' + 'Vishwa' into '#IshaVishwaWalaLove' or '#IshqWalaLoveWithVishwa'.",
+        "readability_and_trap_check": "18 characters, melodic and instantly recognizable."
+      },
+      "target_output": {
+        "primary_hashtag": "#IshaVishwaWalaLove",
+        "companion_variations": [
+          "#IshqWalaLove",
+          "#VishwaKaIshaWalaLove"
+        ],
+        "reusable_pattern_schema": "[Bride Name 'Isha/Ishita'] + [Groom Name ending in '-wa/-va'] + WalaLove"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#VishwaWedsIsha",
+        "shallow_wordplay_rejected": "#VishIsha2026",
+        "why_creative_choice_wins": "Connects the phonetic overlap of 'Isha/Ishq' and 'Vishwa/Wala' to a romantic Bollywood anthem."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 36,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Smriti",
+          "last_name": "Sadana",
+          "nickname": "Simi",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Shrilay",
+          "last_name": "Thakur",
+          "nickname": "Shri",
+          "cultural_roots": "North Indian / Rajput"
+        },
+        "couple_story_and_vibe": "Fun baraat and vidaai theme where the groom sweeps the bride off her feet."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's rare name 'Shrilay' contains '-lay' (sounds identical to Hindi 'Le' in 'Le Gaya' = 'took away / swept off her feet' as in 'Dilwale Dulhania Le Jayenge').",
+        "cultural_or_emotional_anchor": "The classic Hindi wedding phrase 'Dulhania Le Gaya' ('The groom swept the bride away').",
+        "transformation_logic": "Turn the second syllable of 'Shrilay' into the Hindi verb 'Lay Gaya' -> '#ShrilayGayaSmriti' ('Shrilay swept Smriti away!').",
+        "readability_and_trap_check": "17 characters, brilliant grammatical bridge where the last syllable of the groom's name functions as the Hindi verb 'Le' (took)."
+      },
+      "target_output": {
+        "primary_hashtag": "#ShrilayGayaSmriti",
+        "companion_variations": [
+          "#SmritiKiShrilay",
+          "#SadanaToThakur"
+        ],
+        "reusable_pattern_schema": "[Groom Name ending in '-lay/-le' (Shrilay/malay)] + Gaya + [Bride Name]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#ShrilayWedsSmriti",
+        "shallow_wordplay_rejected": "#ShriSmri2026",
+        "why_creative_choice_wins": "Instead of struggling with an uncommon name like 'Shrilay', it uses the '-lay' ending as a syntactic hinge ('Le Gaya' = swept away) in Hindi."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 37,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Anushka",
+          "last_name": "Dilawari",
+          "nickname": "Anu",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Sukhman",
+          "last_name": "Sandhu",
+          "nickname": "Sukhi",
+          "cultural_roots": "Punjabi Sikh"
+        },
+        "couple_story_and_vibe": "Look closely at their full names: the bride's surname is literally 'Dilawari' (starts with 'Dil' = Heart) and the groom's first name is 'Sukhman' ('Sukhi' = Happy) with surname 'Sandhu'."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's surname 'Dilawari' gives 'Dil' (Heart); Groom's surname is 'Sandhu'; Groom's nickname 'Sukhi' means 'Happy' in Punjabi/Hindi.",
+        "cultural_or_emotional_anchor": "Madhur Bhandarkar's film 'Dil Toh Baccha Hai Ji' + 'Happily Ever After' ('Sukhi Ever After').",
+        "transformation_logic": "Take 'Dil' (from Anushka Dilawari) + 'Toh' + 'Sandhu' (from Sukhman Sandhu) + 'Hai' -> '#DilTohSandhuHai', paired with '#SukhiEverAfterWithAnushka'.",
+        "readability_and_trap_check": "15 characters, hidden gem because 'Dil' is actually the prefix of the bride's maiden surname ('Dilawari')."
+      },
+      "target_output": {
+        "primary_hashtag": "#DilTohSandhuHai",
+        "companion_variations": [
+          "#SukhiEverAfter",
+          "#AnushkaMakesSukhmanSukhi"
+        ],
+        "reusable_pattern_schema": "[Bride Surname Prefix 'Dil' (Dilawari)] + Toh + [Groom Surname] + Hai"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SukhmanWedsAnushka",
+        "shallow_wordplay_rejected": "#SukhAnu2026",
+        "why_creative_choice_wins": "Spots the hidden word 'Dil' inside the bride's maiden surname 'Dilawari' and links it to the groom's surname 'Sandhu'."
+      },
+      "source_name": "PlanEvents.ca",
+      "source_url": "https://www.planevents.ca/indian-wedding-hashtags/"
+    },
+    {
+      "id": 38,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Harsheen",
+          "last_name": "Kaur",
+          "nickname": "Sheen",
+          "cultural_roots": "Punjabi Sikh"
+        },
+        "groom": {
+          "first_name": "Harji",
+          "last_name": "Singh",
+          "nickname": "Harji",
+          "cultural_roots": "Punjabi Sikh"
+        },
+        "couple_story_and_vibe": "Soulful Punjabi couple whose wedding reel anthem is B Praak's emotional hit 'Mann Bharryaa' ('My heart is full')."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Both names start with 'Har-' (Harsheen & Harji), meaning every moment/heart is filled with love.",
+        "cultural_or_emotional_anchor": "The beloved Punjabi ballad 'Mann Bharryaa' (featured in Shershaah), symbolizing a heart overflowing with gratitude and love.",
+        "transformation_logic": "Frame their shared 'Har-' prefix around the song hook -> '#HarPalMannBharya' or '#HarsheenHarjiDaMannBharya'.",
+        "readability_and_trap_check": "16 characters, deeply resonant for Punjabi Anand Karaj ceremonies."
+      },
+      "target_output": {
+        "primary_hashtag": "#HarPalMannBharya",
+        "companion_variations": [
+          "#MannBharyaWithHarji",
+          "#HarjiKiHarsheen"
+        ],
+        "reusable_pattern_schema": "When both names share 'Har-' (Harsheen + Harji), use 'Har' in its Hindi/Punjabi sense ('Every') + a soulful Punjabi song hook."
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#HarjiWedsHarsheen",
+        "shallow_wordplay_rejected": "#HarHar2026",
+        "why_creative_choice_wins": "Prevents the awkward repetition of '#HarHar' by turning the shared syllable 'Har' into 'Har Pal' ('Every Moment') paired with 'Mann Bharya'."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 39,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Tara",
+          "last_name": "Kapoor",
+          "nickname": "Tara",
+          "cultural_roots": "North Indian"
+        },
+        "groom": {
+          "first_name": "Rohan",
+          "last_name": "Sharma",
+          "nickname": "Ro",
+          "cultural_roots": "North Indian Brahmin"
+        },
+        "couple_story_and_vibe": "Playful bride marrying into a Sharma family, turning a classic Hindi verb ('Sharma gayi' = blushed shyly) into a surname pun."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's surname 'Sharma' is identical to the root of the Hindi verb 'Sharmana' ('to blush / feel shy').",
+        "cultural_or_emotional_anchor": "Classic Bollywood bridal trope where the bride blushes ('Dulhan sharma gayi') while literally becoming a 'Sharma'.",
+        "transformation_logic": "Combine Bride's first name ('Tara') + Groom's surname as a verb ('Sharma Gayi') -> '#TaraShrmaGayi' or '#TaraSharmaGayi'.",
+        "readability_and_trap_check": "15 characters, effortless Hindi pun that means both 'Tara blushed' and 'Tara became a Sharma'."
+      },
+      "target_output": {
+        "primary_hashtag": "#TaraSharmaGayi",
+        "companion_variations": [
+          "#TaraShrmaGayi",
+          "#RohanKiTaraSharmaGayi"
+        ],
+        "reusable_pattern_schema": "[Bride First Name] + SharmaGayi (Play on 'Blushed' + becoming Mrs. Sharma)"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RohanWedsTara",
+        "shallow_wordplay_rejected": "#TaRoSharma",
+        "why_creative_choice_wins": "Exploits the dual meaning of 'Sharma' in Hindi (both a common surname and the verb 'to blush') to create a charming visual image."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 40,
+      "category": "Bollywood & Filmy Narrative Mashups",
+      "input_context": {
+        "bride": {
+          "first_name": "Rhea",
+          "last_name": "Kapoor",
+          "nickname": "Rhea",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Viren",
+          "last_name": "Ahuja",
+          "nickname": "Vire",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Glamorous, fashion-forward Punjabi wedding where the groom's name is Viren ('Vire')."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom's name 'Viren' shortens to 'Vire' (pronounced identically to 'Veere' = brother/friend in Punjabi).",
+        "cultural_or_emotional_anchor": "The hit Bollywood chick-flick 'Veere Di Wedding'.",
+        "transformation_logic": "Substitute 'Vire' (Viren) for 'Veere' -> '#VireDiWedding' (and '#RheaAtVireDiWedding').",
+        "readability_and_trap_check": "14 characters, trendy, high-glamour Bollywood reference."
+      },
+      "target_output": {
+        "primary_hashtag": "#VireDiWedding",
+        "companion_variations": [
+          "#RheaAtVireDiWedding",
+          "#VirenKiRhea"
+        ],
+        "reusable_pattern_schema": "[Groom Name 'Viren/Viraj/Veer'] + DiWedding"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#VirenWedsRhea",
+        "shallow_wordplay_rejected": "#ViRhea2026",
+        "why_creative_choice_wins": "Direct phonetic match with a recognizable Bollywood wedding movie title."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 41,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Charvi",
+          "last_name": "Sood",
+          "nickname": "Chakna / Charu",
+          "cultural_roots": "Punjabi / Delhi"
+        },
+        "groom": {
+          "first_name": "Ranbir",
+          "last_name": "Bedi",
+          "nickname": "Beer / Bir",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Party-loving foodie couple who bonded over craft beer and bar snacks on their first date."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Ranbir ends with '-bir' (pronounced like 'Beer'); Charvi starts with 'Cha-' (evoking 'Chakna', the spicy Indian bar snack that is inseparable from beer).",
+        "cultural_or_emotional_anchor": "In Indian party culture, beer is incomplete without chakna ('Tu Beer Main Chakna' = 'You are the beer, I am your indispensable companion').",
+        "transformation_logic": "Map Ranbir -> 'Beer' and Charvi -> 'Chakna' -> '#TuBeerMaiChakna' (or '#RanBeerWithCharviChakna').",
+        "readability_and_trap_check": "16 characters, unforgettable Sangeet/Cocktail bar sign hashtag."
+      },
+      "target_output": {
+        "primary_hashtag": "#TuBeerMaiChakna",
+        "companion_variations": [
+          "#RanBeerFoundHisCharvi",
+          "#BeerAndChaknaForever"
+        ],
+        "reusable_pattern_schema": "Map phonetic fragments of names ('-bir' = Beer, 'Cha-' = Chakna/Chai) to inseparable Indian food-and-drink pairings."
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RanbirWedsCharvi",
+        "shallow_wordplay_rejected": "#RanChar2026",
+        "why_creative_choice_wins": "Translates phonetic cues ('-bir' and 'Cha-') into a hilarious, culturally specific metaphor for two things that belong together."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 42,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Nandini",
+          "last_name": "Bikaneri",
+          "nickname": "Nandu",
+          "cultural_roots": "Marwari / Rajasthani"
+        },
+        "groom": {
+          "first_name": "Karan",
+          "last_name": "Chawla",
+          "nickname": "Karan",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Cross-cultural Marwari-Punjabi wedding where the catering menu combines rich Punjabi Butter Chicken with crispy Marwari Bhujiya."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Instead of forcing non-rhyming names ('Nandini' & 'Karan'), look at their cultural identities: Punjabi ('Butter Chicken') + Marwari ('Bhujiya').",
+        "cultural_or_emotional_anchor": "In Indian weddings, food is the ultimate cultural bridge between two families from different states.",
+        "transformation_logic": "Pair the groom's signature regional dish with the bride's signature regional snack -> '#ButterchickenWithBhujiya' (paired with '#KaranKiNandini').",
+        "readability_and_trap_check": "24 characters, mouth-watering, tells the cross-cultural story at a glance."
+      },
+      "target_output": {
+        "primary_hashtag": "#ButterchickenWithBhujiya",
+        "companion_variations": [
+          "#BhujiyaMeetsButterchicken",
+          "#KaranNandiniTwoStates"
+        ],
+        "reusable_pattern_schema": "[Groom Regional Iconic Dish] + With + [Bride Regional Iconic Dish] (Ideal for inter-state weddings when names don't pun)"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#KaranWedsNandini",
+        "shallow_wordplay_rejected": "#KarNan2026",
+        "why_creative_choice_wins": "Teaches the LLM that when names resist wordplay, shifting to cultural/culinary storytelling creates a far more memorable tag than '#KarNan'."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 43,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Drashti",
+          "last_name": "Desai",
+          "nickname": "Dishu",
+          "cultural_roots": "Gujarati"
+        },
+        "groom": {
+          "first_name": "Angad",
+          "last_name": "Bedi",
+          "nickname": "Angad",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Punjabi groom who fell head over heels for a Gujarati girl; their Sangeet combines Dhol Bhangra with Dandiya Raas."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Punjabi folk/pop phrase 'Dil Lagi Kudi' ('The girl who stole my heart') + Gujarati origin ('Gujarat Di').",
+        "cultural_or_emotional_anchor": "Bhangra-meets-Garba fusion celebration.",
+        "transformation_logic": "Blend the Punjabi lyric with her Gujarati roots -> '#DilLagiKudiGujaratDi' (or '#AngadNuDilLagiDrashtiGujaratDi').",
+        "readability_and_trap_check": "21 characters, musical Punjabi cadence celebrating a Gujarati bride."
+      },
+      "target_output": {
+        "primary_hashtag": "#DilLagiKudiGujaratDi",
+        "companion_variations": [
+          "#BhangraMeetsGarbaWithDrashti",
+          "#AngadKiGujjuKudi"
+        ],
+        "reusable_pattern_schema": "DilLagiKudi + [Bride's State/City] + Di"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#AngadWedsDrashti",
+        "shallow_wordplay_rejected": "#AngDra2026",
+        "why_creative_choice_wins": "Captures the joyful cross-cultural fusion of a Punjabi boy falling for a Gujarati girl in authentic Punjabi verse."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    },
+    {
+      "id": 44,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Isha",
+          "last_name": "Kulkarni",
+          "nickname": "Ishu",
+          "cultural_roots": "Maharashtrian"
+        },
+        "groom": {
+          "first_name": "Sanjay",
+          "last_name": "Rao",
+          "nickname": "Sanju",
+          "cultural_roots": "South Indian"
+        },
+        "couple_story_and_vibe": "Romantic couple wanting a clever vow-inspired hashtag that fuses both first names."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "'Isha' starts with the 'I' sound ('I-sha'), which phonetically mirrors the wedding vow 'I Do' when preceded by 'Says'.",
+        "cultural_or_emotional_anchor": "The universal wedding vow phrase 'Says I Do' blended with the bride's name 'Isha'.",
+        "transformation_logic": "Take 'Sanjay' + 'Says' + 'ISha' (capitalizing both I and S so it reads as 'I-Sha') -> '#SanjaySaysISha'.",
+        "readability_and_trap_check": "15 characters, alliterative ('Sanjay Says... ISha')."
+      },
+      "target_output": {
+        "primary_hashtag": "#SanjaySaysISha",
+        "companion_variations": [
+          "#IShaDoWithSanjay",
+          "#SanjayKaIsha"
+        ],
+        "reusable_pattern_schema": "[Groom Name] + Says + [Bride Name starting with 'I-' capitalized to echo 'I Do']"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SanjayWedsIsha",
+        "shallow_wordplay_rejected": "#SanIsha2026",
+        "why_creative_choice_wins": "Uses typography and phonetics ('Says ISha') to echo the wedding vow 'Says I Do'."
+      },
+      "source_name": "Sumaroh",
+      "source_url": "https://sumaroh.com/posts/the-ultimate-guide-to-wedding-hashtags-for-indian-couples"
+    },
+    {
+      "id": 45,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Priya",
+          "last_name": "Nair",
+          "nickname": "Pri",
+          "cultural_roots": "South Indian"
+        },
+        "groom": {
+          "first_name": "Puneet",
+          "last_name": "Malhotra",
+          "nickname": "Punu",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Both names start with 'P', and they want their hashtag to celebrate the sacred Saat Phere (seven rounds around the sacred fire)."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "'Priya' (P), 'Puneet' (P), and the Indian wedding ritual 'Phera' (Ph/P) form a natural triple alliteration.",
+        "cultural_or_emotional_anchor": "The sacred Pheras around the wedding fire, plus the playful choice of 'Picking' each other.",
+        "transformation_logic": "Place the ritual verb/noun 'Phera' (or 'Picks') between the two P-names -> '#PriyaPheraPuneet' and '#PriyaPicksPuneet'.",
+        "readability_and_trap_check": "17 characters, rhythmic triple-P alliteration that rolls off the tongue."
+      },
+      "target_output": {
+        "primary_hashtag": "#PriyaPheraPuneet",
+        "companion_variations": [
+          "#PriyaPicksPuneet",
+          "#PriPuneetForever"
+        ],
+        "reusable_pattern_schema": "[Bride Name starting with P] + [Phera / Picks] + [Groom Name starting with P]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#PriyaWedsPuneet",
+        "shallow_wordplay_rejected": "#PriPun2026",
+        "why_creative_choice_wins": "Replaces the generic 'Weds' with an alliterative Indian ritual word ('Phera') that bridges both P-names."
+      },
+      "source_name": "Sumaroh",
+      "source_url": "https://sumaroh.com/posts/the-ultimate-guide-to-wedding-hashtags-for-indian-couples"
+    },
+    {
+      "id": 46,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Sarika",
+          "last_name": "Reddy",
+          "nickname": "Sari",
+          "cultural_roots": "Telugu / South Indian"
+        },
+        "groom": {
+          "first_name": "Siddharth",
+          "last_name": "Menon",
+          "nickname": "Sid",
+          "cultural_roots": "Malayali / South Indian"
+        },
+        "couple_story_and_vibe": "Sarika goes by the nickname 'Sari' (which also means the iconic Indian bridal garment) and Siddharth goes by 'Sid'."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Groom is 'Sid' (S); Bride's nickname 'Sari' (S) is a homonym for the traditional silk bridal 'Sari'.",
+        "cultural_or_emotional_anchor": "Silk, sass, and South Indian Kanjeevaram bridal grandeur.",
+        "transformation_logic": "Connect 'Sid' + 'Snagged' (alliterating S-verb) + 'Sari' -> '#SidSnaggedSari'. Also note the critical safety guardrail: Anu/Sari + Sid in reverse could risk awkward lowercase strings, whereas '#SidSnaggedSari' is 100% clean.",
+        "readability_and_trap_check": "15 characters, triple-S alliteration with a witty double meaning on 'Sari'."
+      },
+      "target_output": {
+        "primary_hashtag": "#SidSnaggedSari",
+        "companion_variations": [
+          "#SidWedsSari",
+          "#SariNotSorryImSids"
+        ],
+        "reusable_pattern_schema": "[Groom S-Name] + [Alliterative Action Verb (Snagged/Sealed/Stole)] + [Bride S-Nickname with Cultural Double Meaning]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SiddharthWedsSarika",
+        "shallow_wordplay_rejected": "#SidSar2026",
+        "why_creative_choice_wins": "Plays on the bride's nickname 'Sari' as both her name and the quintessential Indian wedding attire."
+      },
+      "source_name": "Sumaroh",
+      "source_url": "https://sumaroh.com/posts/the-ultimate-guide-to-wedding-hashtags-for-indian-couples"
+    },
+    {
+      "id": 47,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Riya",
+          "last_name": "Bhatia",
+          "nickname": "Riyu",
+          "cultural_roots": "Punjabi"
+        },
+        "groom": {
+          "first_name": "Rohan",
+          "last_name": "Kapoor",
+          "nickname": "Ro",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Grand ring ceremony / engagement followed by a 3-day wedding celebration."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Both 'Riya' and 'Rohan' start with 'R-'.",
+        "cultural_or_emotional_anchor": "The Ring Ceremony (Sagai/Engagement) and wedding bands.",
+        "transformation_logic": "Bridge the two R-names with the active R-verb 'Rings' -> '#RiyaRingsRohan' (or '#RohanRopedRiya').",
+        "readability_and_trap_check": "15 characters, punchy 3-word alliteration that is impossible for guests to misspell."
+      },
+      "target_output": {
+        "primary_hashtag": "#RiyaRingsRohan",
+        "companion_variations": [
+          "#RohanRopedRiya",
+          "#RoRiForever"
+        ],
+        "reusable_pattern_schema": "[Bride R-Name] + [Rings / Roped / Rocks] + [Groom R-Name]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#RohanWedsRiya",
+        "shallow_wordplay_rejected": "#RiyRoh2026",
+        "why_creative_choice_wins": "Active verb 'Rings' turns two common R-names into a dynamic, rhythmic headline."
+      },
+      "source_name": "Sumaroh",
+      "source_url": "https://sumaroh.com/posts/the-ultimate-guide-to-wedding-hashtags-for-indian-couples"
+    },
+    {
+      "id": 48,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Anu",
+          "last_name": "Sharma",
+          "nickname": "Anu",
+          "cultural_roots": "North Indian"
+        },
+        "groom": {
+          "first_name": "Amit",
+          "last_name": "Verma",
+          "nickname": "Amit",
+          "cultural_roots": "North Indian"
+        },
+        "couple_story_and_vibe": "Couple wants function-specific hashtags for their Haldi and Wedding Day while avoiding the lowercase trap."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Both names start with 'A-' (Amit & Anu). Note the classic warning: combining Anu + Sid or Anu + Ravi without a separator ('#AnuRavi' sounds like 'An Uravi'; '#AnuSid' in lowercase reads 'anusid').",
+        "cultural_or_emotional_anchor": "Embedding the sacred Indian rituals ('Haldi', 'Mangalsutra') directly between or alongside their names.",
+        "transformation_logic": "Insert the ritual noun between the names -> '#AmitHaldiAnu' for the Haldi carnival and '#AmitKaMangalsutra' / '#AnuLovesAmit' for the pheras.",
+        "readability_and_trap_check": "13 characters, completely eliminates phonetic/lowercase collisions while grounding the tag in Indian ceremonies."
+      },
+      "target_output": {
+        "primary_hashtag": "#AmitHaldiAnu",
+        "companion_variations": [
+          "#AmitKaMangalsutra",
+          "#AnuAurAmitKiShaadi"
+        ],
+        "reusable_pattern_schema": "[Groom Name] + [Ritual Name: Haldi/Mehendi/Sangeet/Phera] + [Bride Name] (Also acts as a separator to prevent lowercase collisions)"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#AmitAnu",
+        "shallow_wordplay_rejected": "#AmAnu2026",
+        "why_creative_choice_wins": "Demonstrates how inserting a Desi ritual word ('Haldi') between short names creates both cultural flavor and phonetic separation."
+      },
+      "source_name": "Sumaroh",
+      "source_url": "https://sumaroh.com/posts/the-ultimate-guide-to-wedding-hashtags-for-indian-couples"
+    },
+    {
+      "id": 49,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Siya",
+          "last_name": "Kapoor",
+          "nickname": "Siyu",
+          "cultural_roots": "North Indian"
+        },
+        "groom": {
+          "first_name": "Sanjay",
+          "last_name": "Malhotra",
+          "nickname": "Sanju",
+          "cultural_roots": "Punjabi"
+        },
+        "couple_story_and_vibe": "Dance-obsessed couple whose Sangeet night is the centerpiece event of their wedding weekend."
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "'Sanjay' (S) and 'Siya' (S) bookend 'Sangeet' (S) with musical alliteration.",
+        "cultural_or_emotional_anchor": "The high-octane Indian Sangeet dance battle between Ladkewale and Ladkiwale.",
+        "transformation_logic": "Sandwich 'Sangeet' between the groom and bride's S-names -> '#SanjaySangeetSiya'.",
+        "readability_and_trap_check": "17 characters, symmetrical S-S-S alliteration."
+      },
+      "target_output": {
+        "primary_hashtag": "#SanjaySangeetSiya",
+        "companion_variations": [
+          "#SiyaSangeetWithSanjay",
+          "#SanSiyaOnTheDanceFloor"
+        ],
+        "reusable_pattern_schema": "[Partner 1 S-Name] + Sangeet + [Partner 2 S-Name]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#SanjayWedsSiya",
+        "shallow_wordplay_rejected": "#SanSiy2026",
+        "why_creative_choice_wins": "Uses the Indian ceremony name ('Sangeet') as the alliterative bridge uniting Sanjay and Siya."
+      },
+      "source_name": "Sumaroh",
+      "source_url": "https://sumaroh.com/posts/the-ultimate-guide-to-wedding-hashtags-for-indian-couples"
+    },
+    {
+      "id": 50,
+      "category": "Story-Driven, Cross-Cultural & Ritual Action Tags",
+      "input_context": {
+        "bride": {
+          "first_name": "Pooja",
+          "last_name": "Hegde",
+          "nickname": "Poo",
+          "cultural_roots": "South Indian / Mumbai"
+        },
+        "groom": {
+          "first_name": "Yash",
+          "last_name": "Singhaniya",
+          "nickname": "Yash",
+          "cultural_roots": "Marwari / Mumbai"
+        },
+        "couple_story_and_vibe": "Pooja channels her inner 'Poo' from Kabhi Khushi Kabhie Gham, and Yash's name sounds just like an enthusiastic 'Yes!'"
+      },
+      "creative_chain_of_thought": {
+        "phonetic_and_lexical_hooks": "Bride's nickname 'Poo' (iconic K3G character + short for Pooja); Groom's name 'Yash' is a phonetic twin of 'Yes!' (especially in Hinglish/Desi pronunciation).",
+        "cultural_or_emotional_anchor": "The proposal milestone 'She said Yes!' fused with Pooja's iconic nickname 'Poo'.",
+        "transformation_logic": "Replace 'She' with 'Poo' (Pooja) and 'Yes' with 'Yash' -> '#PooSaidYash'!",
+        "readability_and_trap_check": "12 characters, ultra-punchy, lands the joke in under one second."
+      },
+      "target_output": {
+        "primary_hashtag": "#PooSaidYash",
+        "companion_variations": [
+          "#PoojaSaidYash",
+          "#YashKiPooja"
+        ],
+        "reusable_pattern_schema": "[Bride Name/Nickname] + Said + [Groom Name sounding like 'Yes' (Yash/Yashraj/Yashwant)]"
+      },
+      "contrastive_evaluation": {
+        "naive_concatenation_rejected": "#YashWedsPooja",
+        "shallow_wordplay_rejected": "#PooYash2026",
+        "why_creative_choice_wins": "Every word in '#PooSaidYash' does double duty: 'Poo' is both Pooja and the iconic K3G diva, while 'Yash' is both the groom's name and her 'Yes!' to his proposal."
+      },
+      "source_name": "Eternal Weddingz",
+      "source_url": "https://www.eternalweddingz.in/blogs/wedding-hashtags-ideas-that-unveil-who-you-truly-are/view"
+    }
+  ]
+}
