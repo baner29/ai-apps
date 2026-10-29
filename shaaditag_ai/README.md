@@ -25,9 +25,9 @@
   - **Live Social Availability Check**: Direct button (`Check on Instagram`) opening `https://www.instagram.com/explore/tags/{hashtag_without_hash}/` in a new tab.
 - **50-Example Reference Library Tab**: Browse, search, and filter all 50 curated examples from `indian_wedding_hashtags_template.json`.
 
-### 3. Vertex AI (`gemini-3.8-flash`) + Smart Local Pattern Engine Fallback
-- Configured for **Vertex AI (Agent Platform)** with `GOOGLE_GENAI_USE_VERTEXAI=True` (and `OOGLE_GENAI_USE_VERTEXAI=True`) and model `gemini-3.8-flash`.
-- Includes a deterministic **Smart Local Pattern Engine** that applies the 50 `reusable_pattern_schema` rules immediately if Vertex AI credentials or an API key are not active.
+### 3. Vertex AI (`gemini-3.8-flash`) - Vertex Only
+- Configured for **Vertex AI (Agent Platform)** with `GOOGLE_GENAI_USE_VERTEXAI=True` (and `OOGLE_GENAI_USE_VERTEXAI=True`) and model `gemini-3.8-flash`, location `global`.
+- Authentication is via Application Default Credentials (the Cloud Run service account). There is **no API-key path and no local fallback engine** - if Vertex AI is unavailable, the API returns an error.
 
 ---
 
@@ -59,7 +59,7 @@ Or run `gcloud` directly:
 ```bash
 gcloud run deploy shaaditag-ai \
   --source . \
-  --region us-central1 \
+  --region northamerica-northeast2 \
   --allow-unauthenticated \
-  --set-env-vars="GOOGLE_GENAI_USE_VERTEXAI=True,OOGLE_GENAI_USE_VERTEXAI=True,GOOGLE_CLOUD_PROJECT=gemini-enterprise-app-508802,GOOGLE_CLOUD_LOCATION=us-central1,GEMINI_MODEL=gemini-3.8-flash"
+  --set-env-vars="GOOGLE_GENAI_USE_VERTEXAI=True,OOGLE_GENAI_USE_VERTEXAI=True,GOOGLE_CLOUD_PROJECT=banercorp-web,GOOGLE_CLOUD_LOCATION=us-central1,GEMINI_MODEL=gemini-3.8-flash"
 ```

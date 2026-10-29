@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT_ID="${GOOGLE_CLOUD_PROJECT:-gemini-enterprise-app-508802}"
-REGION="${GOOGLE_CLOUD_LOCATION:-us-central1}"
+PROJECT_ID="${GOOGLE_CLOUD_PROJECT:-banercorp-web}"
+REGION="${CLOUD_RUN_REGION:-northamerica-northeast2}"
 SERVICE_NAME="${SERVICE_NAME:-shaaditag-ai}"
 MODEL="${GEMINI_MODEL:-gemini-3.8-flash}"
 
