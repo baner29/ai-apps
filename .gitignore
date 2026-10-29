@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# JavaScript dependencies and build output
+node_modules/
+dist/
