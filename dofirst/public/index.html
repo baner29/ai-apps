@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>DoFirst: Task Prioritization Matrix</title>
+  <meta name="description" content="DoFirst puts personal and professional tasks on a prioritization matrix, with drag-and-drop quadrants and AI scoring based on description, due date, impact, importance, and criticality." />
+  <meta name="theme-color" content="#6d28d9" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <img src="/icons/icon.svg" alt="" class="brand-icon" />
+      <div>
+        <h1>DoFirst</h1>
+        <p class="tagline">Decide what to do first. Everything else can wait its turn.</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span id="counts" class="counts"></span>
+      <button id="score-all" class="btn btn-primary" type="button">AI Prioritize All</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel" aria-label="Add a task">
+      <form id="quick-add" class="quick-add">
+        <input id="quick-title" type="text" placeholder="Quick add a task, the AI will place it..." autocomplete="off" required />
+        <input id="quick-due" type="date" aria-label="Due date" />
+        <button class="btn btn-primary" type="submit">Add</button>
+        <button id="toggle-detail" class="btn btn-ghost" type="button">Detailed add</button>
+      </form>
+
+      <form id="detail-form" class="detail-form" hidden>
+        <input type="hidden" id="f-id" />
+        <label>Title
+          <input id="f-title" type="text" required autocomplete="off" />
+        </label>
+        <label class="span-2">Description
+          <textarea id="f-desc" rows="2" placeholder="What is this task, and why does it matter?"></textarea>
+        </label>
+        <label>Due date
+          <input id="f-due" type="date" />
+        </label>
+        <label>Context
+          <select id="f-context">
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+          </select>
+        </label>
+        <label>Placement
+          <select id="f-quadrant">
+            <option value="ai">Let the AI decide</option>
+            <option value="do-now">Do Now (manual)</option>
+            <option value="schedule">Schedule (manual)</option>
+            <option value="delegate">Delegate (manual)</option>
+            <option value="eliminate">Eliminate (manual)</option>
+          </select>
+        </label>
+        <label>Impact
+          <select id="f-impact">
+            <option value="">Auto (from description)</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+          </select>
+        </label>
+        <label>Importance
+          <select id="f-importance">
+            <option value="">Auto (from description)</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+          </select>
+        </label>
+        <label>Criticality
+          <select id="f-criticality">
+            <option value="">Auto (from description)</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+          </select>
+        </label>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" id="detail-submit">Save task</button>
+          <button class="btn btn-ghost" type="button" id="detail-cancel">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="toolbar" aria-label="Board controls">
+      <div class="segmented" role="group" aria-label="Filter by context">
+        <button type="button" data-filter="all" class="active">All</button>
+        <button type="button" data-filter="work">Work</button>
+        <button type="button" data-filter="personal">Personal</button>
+      </div>
+      <input id="search" type="search" placeholder="Search tasks..." aria-label="Search tasks" />
+      <label class="show-done"><input id="show-done" type="checkbox" checked /> Show done</label>
+    </section>
+
+    <section id="board" class="board" aria-label="Prioritization matrix"></section>
+
+    <p id="status" class="status" role="status"></p>
+  </main>
+
+  <footer class="app-footer">
+    <p>Your tasks are saved on this computer and stay there. Drag a card to override the AI at any time.</p>
+  </footer>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

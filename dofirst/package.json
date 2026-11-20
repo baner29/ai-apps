@@ -1,0 +1,28 @@
+{
+  "bin": {
+    "dofirst": "bin/dofirst.js"
+  },
+  "description": "DoFirst is a task prioritization app that puts personal and professional tasks on an Eisenhower matrix, with drag-and-drop quadrants and AI scoring based on the task description, due date, impact, importance, and criticality.",
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "task-manager",
+    "prioritization",
+    "eisenhower-matrix",
+    "productivity"
+  ],
+  "license": "Apache-2.0",
+  "name": "dofirst",
+  "repository": {
+    "directory": "dofirst",
+    "type": "git",
+    "url": "https://github.com/baner29/ai-apps.git"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/scorer.test.js"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
