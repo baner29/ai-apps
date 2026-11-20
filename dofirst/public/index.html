@@ -22,56 +22,10 @@
     </div>
     <div class="header-actions">
       <span id="counts" class="counts"></span>
-      <button id="toggle-deploy" class="btn" type="button">Run anywhere</button>
       <button id="score-all" class="btn btn-primary" type="button">AI Prioritize All</button>
     </div>
   </header>
 
-  <section id="deploy" class="deploy" hidden>
-    <h2>Run DoFirst anywhere</h2>
-    <p>DoFirst is not tied to one platform. Run it on your own computer, or take it to a managed AI hosting platform. Your tasks live wherever you run it, so pick the home that suits you.</p>
-
-    <h3>Self-hosted, on your own computer</h3>
-    <ul>
-      <li><strong>This computer, right now:</strong> you are already running the self-hosted edition. It saves tasks to a file on this machine and works offline.</li>
-      <li><strong>Any Windows or Mac computer:</strong> install Node.js 18 or later, then run <code>npx degit baner29/ai-apps/dofirst dofirst-app</code>, <code>cd dofirst-app</code>, and <code>npm start</code>. Or clone the repository and run <code>npm start</code> in the <code>dofirst</code> folder.</li>
-      <li><strong>As a command:</strong> run <code>npm install -g .</code> once inside the folder, then type <code>dofirst</code> in any terminal.</li>
-      <li><strong>As a desktop app:</strong> with DoFirst running, use your browser's Install option (Chrome or Edge), or Add to Dock in Safari on a Mac.</li>
-    </ul>
-
-    <h3>Portable single-file edition</h3>
-    <p>Most managed AI platforms host a single HTML file. DoFirst ships one: the full board and scoring engine in a single file, with tasks saved in the browser on that platform.</p>
-    <p><a class="btn btn-primary download" href="/standalone.html" download="dofirst-standalone.html">Download the single-file edition</a></p>
-
-    <h3>Managed AI hosting platforms</h3>
-    <table class="platforms">
-      <thead>
-        <tr><th>Platform</th><th>Their hosting feature</th><th>How to add DoFirst</th><th>Good to know</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><strong>Anthropic Claude</strong></td><td>Artifacts</td><td>Start an Artifact and paste in the single-file edition, or ask Claude to rebuild DoFirst from this repository's README.</td><td>Single-file apps. Access is by link, with no app-level login.</td></tr>
-        <tr><td><strong>OpenAI ChatGPT</strong></td><td>Sites</td><td>Ask ChatGPT to create a Site from the single-file edition or from the repository link.</td><td>Hosted URL with a database, user login, and custom domains.</td></tr>
-        <tr><td><strong>Google Gemini</strong></td><td>Canvas</td><td>Open Canvas and paste in the single-file edition, or describe DoFirst and let Gemini build it.</td><td>Apps can get an auto-provisioned database for stored data.</td></tr>
-        <tr><td><strong>xAI Grok</strong></td><td>Build Mode</td><td>Describe DoFirst in Build Mode, or import the project exported from GitHub.</td><td>Publishes to a grok.me address or your own domain. Early beta, top-tier plan at launch.</td></tr>
-        <tr><td><strong>Meta Muse</strong></td><td>Spaces</td><td>Ask Muse to build DoFirst as a Space from the repository README.</td><td>Full-stack Spaces save data on the platform.</td></tr>
-        <tr><td><strong>Perplexity</strong></td><td>Computer</td><td>Ask Computer to build DoFirst, then publish it.</td><td>Publishes to a pplx.app address, or through a connected Vercel account.</td></tr>
-        <tr><td><strong>Microsoft Copilot</strong></td><td>Copilot Pages</td><td>Share the board as a Page for viewing and editing notes.</td><td>Pages suit documents, not full database apps. Use the self-hosted edition for the live board.</td></tr>
-        <tr><td><strong>Lovable</strong></td><td>Built-in hosting</td><td>Import the repository from GitHub, or describe DoFirst in a prompt.</td><td>Publishes to a lovable.app address, with two-way Git sync.</td></tr>
-        <tr><td><strong>Bolt.new</strong></td><td>Bolt hosting</td><td>Import the repository from GitHub, or describe DoFirst in a prompt.</td><td>Publishes to a bolt.host address, with its own database option.</td></tr>
-        <tr><td><strong>Replit</strong></td><td>Agent and Publish</td><td>Import the repository, then use Publish.</td><td>Publishes to a replit.app address, with a managed database.</td></tr>
-        <tr><td><strong>v0 by Vercel</strong></td><td>Vercel deployment</td><td>Describe DoFirst or import the code, then deploy.</td><td>Generates a Next.js app, so this is a rebuild rather than a copy.</td></tr>
-        <tr><td><strong>Base44</strong></td><td>Built-in backend and hosting</td><td>Describe DoFirst in a prompt and let Base44 supply the backend.</td><td>A rebuild on their backend, aimed at non-technical builders.</td></tr>
-        <tr><td><strong>Taskade</strong></td><td>Genesis</td><td>Describe DoFirst and let Genesis generate the workspace.</td><td>Turns the prompt into a workspace with projects, agents, and automations.</td></tr>
-      </tbody>
-    </table>
-
-    <h3>No managed app hosting (yet)</h3>
-    <ul>
-      <li><strong>Meta AI:</strong> no general app-hosting feature for consumers. Use the single-file edition on any static web host, or the self-hosted edition.</li>
-      <li><strong>Hermes Agent (Nous Research):</strong> a self-hosted agent, not a hosting platform. Point Hermes at this repository and it can clone and run the self-hosted edition for you.</li>
-    </ul>
-    <p class="deploy-note">Platform features and plan gates change often. The steps above describe each platform as of November 2026.</p>
-  </section>
 
   <main>
     <section class="panel" aria-label="Add a task">
