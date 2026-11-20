@@ -11,6 +11,8 @@ Most platforms accept one of these three methods:
 1. **Single file:** Paste or upload `standalone.html` from this repository.
    The file contains the full app.
    The app saves tasks in the browser storage of the platform.
+   On a chat-based platform such as Gemini, you attach the file inside a chat.
+   Then you ask the assistant to open the file in the app surface of that platform.
 2. **Repository import:** Give the platform the GitHub address of this repository.
    The platform copies the files and runs the app.
 3. **Prompt rebuild:** Describe DoFirst to the platform.
@@ -43,13 +45,37 @@ Sites can include a database, user login, and a custom domain.
 
 ## Google Gemini: Canvas
 
-1. Open Gemini and open Canvas.
-2. Paste the content of `standalone.html` into Canvas.
-3. Run the app in Canvas.
-4. Share the app from Canvas if you want a link.
+Canvas is a panel inside a Gemini chat.
+Gemini has no separate Canvas page.
+You start Canvas from inside a chat.
 
-Canvas can add an auto-provisioned database to an app.
-The single-file edition uses browser storage and does not need a database.
+On a computer:
+
+1. Go to [gemini.google.com](https://gemini.google.com) and sign in.
+2. Start a new chat.
+3. Below the prompt box, select **Canvas**.
+   In some versions, select **Tools** first, then select **Canvas**.
+   In other versions, click the **+** icon, then select **Canvas**.
+4. Click the **+** icon and select **Upload files**.
+5. Select the `standalone.html` file on your computer.
+6. Enter this prompt: "Open this HTML file as an app in Canvas. Use the code exactly as it is. Do not rewrite the code."
+7. Send the prompt.
+8. Gemini opens the app in the Canvas panel.
+9. Select the preview in the Canvas panel to use the board.
+
+In the Gemini mobile app:
+
+1. Open the Gemini app.
+2. Start a new chat.
+3. Tap the **+** icon below the prompt box.
+4. Select **Canvas**.
+5. Tap the **+** icon again and attach the `standalone.html` file.
+6. Enter the same prompt as Step 6 above.
+7. Send the prompt.
+
+Changes in Canvas are saved automatically.
+The single-file edition saves tasks in the browser storage of the device.
+To save tasks across devices, ask Gemini in the chat to add data storage to the app.
 
 ## xAI Grok: Build Mode
 
