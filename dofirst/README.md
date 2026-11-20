@@ -53,7 +53,7 @@ You need Node.js 18 or a later version.
 6. Enter a task title in the quick-add bar and click **Add**.
 
 For the other installation methods, read [doc/installation.md](doc/installation.md).
-The methods are: clone the repository, install the `dofirst` command, and install DoFirst as a desktop app on Windows or macOS.
+The methods are: clone the repository, and install the `dofirst` command.
 
 ## Run DoFirst on a managed platform
 
@@ -65,6 +65,29 @@ Platforms with managed hosting: Anthropic Claude (Artifacts), OpenAI ChatGPT (Si
 Microsoft Copilot Pages has a limited function for this app.
 
 For the steps for each platform, read [doc/managed-hosting.md](doc/managed-hosting.md).
+
+## Talk to your AI assistant
+
+When DoFirst runs inside your AI platform, you add tasks with natural language.
+You do not open the board first.
+
+1. Open your AI app, for example Gemini or Claude.
+2. Say or type the task in plain words.
+   Example: "Add a task: call the client about the contract, due tomorrow, high impact."
+3. The assistant adds the task to DoFirst.
+4. The scoring engine sets the score and the quadrant.
+5. Open DoFirst in the same AI app to see the board.
+6. Drag a task to a different quadrant, edit it, or complete it, as you like.
+
+This flow helps in an urgent moment.
+You do not search for a pen and a notebook.
+You do not open a separate notes app.
+You do not copy the note into a task list later.
+You do not prioritize the task by hand.
+
+The app and the data live in your account on the AI platform.
+You can open the same board from any device with that account.
+You keep no server and no database.
 
 ## Documentation
 

@@ -303,8 +303,4 @@ $("#show-done").addEventListener("change", (e) => {
   render();
 });
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js").catch(() => {});
-}
-
 load().catch((err) => setStatus(`Could not load tasks: ${err.message}`));

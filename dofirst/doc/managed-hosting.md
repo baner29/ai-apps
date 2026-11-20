@@ -158,6 +158,17 @@ Hermes is not a hosting platform.
 Give Hermes the address of this repository.
 Hermes can clone the repository and run the self-hosted edition for you.
 
+## Add tasks with natural language
+
+After you add DoFirst to a platform, you can work through the assistant of that platform.
+Say the task in plain words.
+The assistant adds the task to the board.
+The scoring engine sets the score and the quadrant.
+Open the app to see the board.
+Move a task, edit a task, or complete a task, as you like.
+The same account gives you the same board on each device.
+You keep no server and no database for this setup.
+
 ## Note
 
 Platform features and plan limits change often.

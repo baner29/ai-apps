@@ -74,21 +74,6 @@ On Windows, the command works in PowerShell and in Command Prompt.
 On macOS, a permissions error can occur during Step 3.
 Install Node.js from the official installer to prevent this error.
 
-## Method 4: Install DoFirst as a desktop app
-
-DoFirst is an installable web app.
-You can add it to your desktop, Dock, or taskbar.
-
-1. Start DoFirst with Method 1, 2, or 3.
-2. Open DoFirst in your browser.
-3. On Windows with Chrome, click the install icon in the address bar.
-4. On Windows with Edge, open the menu and select **Apps**, then **Install this site as an app**.
-5. On macOS with Safari, select **File**, then **Add to Dock**.
-6. Start DoFirst from the new icon.
-
-Keep the server command running while you use the desktop app.
-The app window gets its data from your local server.
-
 ## Where DoFirst saves your tasks
 
 DoFirst saves tasks in one JSON file:
