@@ -125,6 +125,28 @@ textarea { width: 100%; resize: vertical; }
 }
 .card-actions select { font-size: 12.5px; padding: 5px 7px; margin-left: auto; }
 .status { color: var(--muted); font-size: 13.5px; min-height: 20px; }
+.deploy {
+  max-width: 1280px; margin: 6px auto 14px; padding: 18px 24px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+}
+.deploy h2 { margin: 0 0 6px; font-size: 21px; }
+.deploy h3 { margin: 18px 0 6px; font-size: 16px; }
+.deploy p, .deploy li { font-size: 14px; line-height: 1.55; }
+.deploy code {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 5px;
+  padding: 1px 5px; font-size: 12.5px;
+}
+.deploy .download { display: inline-block; text-decoration: none; }
+.platforms { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.platforms th, .platforms td {
+  border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top;
+}
+.platforms th { background: var(--bg); }
+.deploy-note { color: var(--muted); font-size: 12.5px; }
+@media (max-width: 760px) {
+  .deploy { padding: 14px; }
+  .platforms { display: block; overflow-x: auto; }
+}
 .app-footer { max-width: 1280px; margin: 0 auto; padding: 0 24px 28px; color: var(--muted); font-size: 13px; }
 @media (max-width: 760px) {
   .board { grid-template-columns: 1fr; }

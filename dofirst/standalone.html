@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DoFirst: Task Prioritization Matrix (Portable Edition)</title>
+<!--
+  DoFirst, Portable Edition.
+  This is a single self-contained HTML file. It needs no server, no build
+  step, and no network connection. Tasks are saved in the browser's
+  localStorage on whatever device or platform opens the file.
+
+  Use it anywhere a single HTML file can run:
+  - Open it directly in any browser (double-click the file)
+  - Paste or upload it into Claude Artifacts, Gemini Canvas, ChatGPT Sites,
+    Grok Build Mode, Perplexity Computer, or any other AI platform that
+    hosts single-file web apps
+  - Host it on any static web host
+
+  For the full self-hosted edition with a server, a shared database file,
+  and a command-line launcher, see the dofirst folder in this repository.
+-->
+<style>
+  :root{
+    --bg:#f6f6fb; --surface:#ffffff; --text:#1c1b22; --muted:#6b6878;
+    --border:#e3e1ee; --accent:#6d28d9; --accent-text:#ffffff;
+    --do-now:#dc2626; --schedule:#2563eb; --delegate:#d97706; --eliminate:#6b7280;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14131a; --surface:#1f1e29; --text:#f1f0f7; --muted:#a5a2b5; --border:#353344; color-scheme:dark; }
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif; background:var(--bg); color:var(--text); }
+  header{ max-width:1200px; margin:0 auto; padding:20px 20px 4px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; }
+  h1{ margin:0; font-size:28px; letter-spacing:-.5px; }
+  .tagline{ color:var(--muted); margin:2px 0 0; font-size:14px; }
+  main{ max-width:1200px; margin:0 auto; padding:12px 20px 24px; }
+  .panel{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:14px; }
+  .quick-add{ display:flex; gap:10px; flex-wrap:wrap; }
+  .quick-add input[type="text"]{ flex:1 1 260px; }
+  input,select,textarea{ font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:9px 11px; }
+  textarea{ width:100%; resize:vertical; }
+  .btn{ font:inherit; border-radius:9px; padding:9px 16px; cursor:pointer; border:1px solid var(--border); background:var(--surface); color:var(--text); }
+  .btn-primary{ background:var(--accent); border-color:var(--accent); color:var(--accent-text); font-weight:600; }
+  .detail-form{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px; }
+  .detail-form label{ display:flex; flex-direction:column; gap:5px; font-size:13px; color:var(--muted); }
+  .detail-form .span-2{ grid-column:span 2; }
+  .form-actions{ display:flex; gap:10px; align-items:end; }
+  .toolbar{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+  .segmented{ display:inline-flex; border:1px solid var(--border); border-radius:9px; overflow:hidden; }
+  .segmented button{ font:inherit; padding:8px 14px; border:0; background:var(--surface); color:var(--muted); cursor:pointer; }
+  .segmented button.active{ background:var(--accent); color:var(--accent-text); font-weight:600; }
+  .board{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .quadrant{ background:var(--surface); border:1px solid var(--border); border-radius:14px; min-height:210px; display:flex; flex-direction:column; overflow:hidden; }
+  .quadrant.drag-over{ outline:2px dashed var(--accent); outline-offset:-6px; }
+  .quadrant-head{ display:flex; justify-content:space-between; align-items:baseline; padding:12px 14px 8px; border-top:4px solid var(--q,var(--accent)); }
+  .quadrant-head h2{ margin:0; font-size:17px; }
+  .quadrant-head .q-sub{ color:var(--muted); font-size:12px; }
+  .quadrant[data-q="do-now"]{ --q:var(--do-now); } .quadrant[data-q="schedule"]{ --q:var(--schedule); }
+  .quadrant[data-q="delegate"]{ --q:var(--delegate); } .quadrant[data-q="eliminate"]{ --q:var(--eliminate); }
+  .cards{ padding:6px 12px 14px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .empty{ color:var(--muted); font-size:14px; text-align:center; padding:18px 0; margin:0; }
+  .card{ border:1px solid var(--border); border-radius:11px; padding:10px 12px; background:var(--bg); cursor:grab; }
+  .card.done{ opacity:.55; } .card.done .card-title{ text-decoration:line-through; }
+  .card-top{ display:flex; gap:10px; align-items:flex-start; }
+  .done-toggle{ width:26px; height:26px; border-radius:50%; flex:0 0 26px; cursor:pointer; border:2px solid var(--muted); background:transparent; color:var(--accent-text); font-size:14px; line-height:1; padding:0; }
+  .card.done .done-toggle{ background:var(--accent); border-color:var(--accent); }
+  .card-title{ font-weight:600; margin:2px 0; overflow-wrap:anywhere; }
+  .card-desc{ color:var(--muted); font-size:13px; margin:0 0 6px; overflow-wrap:anywhere; }
+  .meta{ display:flex; flex-wrap:wrap; gap:6px; font-size:12px; }
+  .chip{ border:1px solid var(--border); border-radius:999px; padding:2px 8px; color:var(--muted); }
+  .chip.score{ background:var(--accent); border-color:var(--accent); color:var(--accent-text); font-weight:700; }
+  .chip.overdue{ color:var(--do-now); border-color:var(--do-now); font-weight:700; }
+  .reasoning{ font-size:12.5px; color:var(--muted); margin:8px 0 0; }
+  .card-actions{ display:flex; gap:8px; margin-top:9px; flex-wrap:wrap; align-items:center; }
+  .card-actions button{ font-size:12.5px; padding:5px 10px; border-radius:7px; cursor:pointer; border:1px solid var(--border); background:var(--surface); color:var(--text); }
+  .card-actions select{ font-size:12.5px; padding:5px 7px; margin-left:auto; }
+  .status{ color:var(--muted); font-size:13.5px; min-height:20px; }
+  footer{ max-width:1200px; margin:0 auto; padding:0 20px 28px; color:var(--muted); font-size:13px; }
+  @media (max-width:760px){ .board{ grid-template-columns:1fr; } .detail-form{ grid-template-columns:1fr 1fr; } .detail-form .span-2{ grid-column:span 2; } }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>DoFirst</h1>
+    <p class="tagline">Decide what to do first. Portable edition: everything runs in this one file.</p>
+  </div>
+  <div>
+    <span id="counts" class="tagline"></span>
+    <button id="score-all" class="btn btn-primary" type="button">AI Prioritize All</button>
+  </div>
+</header>
+<main>
+  <section class="panel">
+    <form id="quick-add" class="quick-add">
+      <input id="quick-title" type="text" placeholder="Quick add a task, the AI will place it..." autocomplete="off" required />
+      <input id="quick-due" type="date" aria-label="Due date" />
+      <button class="btn btn-primary" type="submit">Add</button>
+      <button id="toggle-detail" class="btn" type="button">Detailed add</button>
+    </form>
+    <form id="detail-form" class="detail-form" hidden>
+      <input type="hidden" id="f-id" />
+      <label>Title <input id="f-title" type="text" required autocomplete="off" /></label>
+      <label class="span-2">Description <textarea id="f-desc" rows="2"></textarea></label>
+      <label>Due date <input id="f-due" type="date" /></label>
+      <label>Context
+        <select id="f-context"><option value="work">Work</option><option value="personal">Personal</option></select>
+      </label>
+      <label>Placement
+        <select id="f-quadrant">
+          <option value="ai">Let the AI decide</option>
+          <option value="do-now">Do Now (manual)</option>
+          <option value="schedule">Schedule (manual)</option>
+          <option value="delegate">Delegate (manual)</option>
+          <option value="eliminate">Eliminate (manual)</option>
+        </select>
+      </label>
+      <label>Impact
+        <select id="f-impact"><option value="">Auto</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </label>
+      <label>Importance
+        <select id="f-importance"><option value="">Auto</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </label>
+      <label>Criticality
+        <select id="f-criticality"><option value="">Auto</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </label>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="detail-submit">Save task</button>
+        <button class="btn" type="button" id="detail-cancel">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="toolbar">
+    <div class="segmented" role="group" aria-label="Filter by context">
+      <button type="button" data-filter="all" class="active">All</button>
+      <button type="button" data-filter="work">Work</button>
+      <button type="button" data-filter="personal">Personal</button>
+    </div>
+    <input id="search" type="search" placeholder="Search tasks..." aria-label="Search tasks" />
+    <label><input id="show-done" type="checkbox" checked /> Show done</label>
+  </section>
+
+  <section id="board" class="board" aria-label="Prioritization matrix"></section>
+  <p id="status" class="status" role="status"></p>
+</main>
+<footer>
+  <p>Tasks are saved in this browser's local storage on this platform. They stay on the device or account that opened this file. Export your board from the full self-hosted edition if you need a shared data file.</p>
+</footer>
+
+<script>
+"use strict";
+/* ---------- Scoring engine (same rules as lib/scorer.js) ---------- */
+const QUADRANTS = [
+  { id: "do-now", label: "Do Now", sub: "Urgent and important" },
+  { id: "schedule", label: "Schedule", sub: "Important, not urgent" },
+  { id: "delegate", label: "Delegate", sub: "Urgent, not important" },
+  { id: "eliminate", label: "Eliminate", sub: "Neither urgent nor important" },
+];
+const Q_LABEL = { "do-now": "Do Now", "schedule": "Schedule", "delegate": "Delegate", "eliminate": "Eliminate" };
+const CRITICAL_WORDS = ["outage","down","crash","broken","emergency","incident","production","security breach","data loss","blocked","blocker","failure","failed","urgent","asap","immediately","deadline","overdue","expiring","expires","payment due","tax filing","visa","passport expiry"];
+const IMPORTANT_WORDS = ["client","customer","revenue","launch","release","interview","presentation","board","strategy","roadmap","health","doctor","family","contract","proposal","invoice","budget","promotion","performance review","goal"];
+const LOW_WORDS = ["someday","maybe","idea","browse","watch later","read later","tidy","reorganize","reorganise","optional","nice to have","if time","when bored"];
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+function findWords(text, words) {
+  return words.filter((w) => new RegExp("\\b" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b").test(text));
+}
+function daysUntilDue(dueDate, now) {
+  if (!dueDate) return null;
+  const due = new Date(dueDate + "T23:59:59");
+  if (isNaN(due.getTime())) return null;
+  const a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const b = new Date(due.getFullYear(), due.getMonth(), due.getDate());
+  return Math.round((b - a) / 86400000);
+}
+function urgencyFromDays(days) {
+  if (days === null) return 20;
+  if (days < 0) return 100;
+  if (days === 0) return 95;
+  if (days === 1) return 85;
+  if (days <= 3) return 70;
+  if (days <= 7) return 55;
+  if (days <= 14) return 40;
+  if (days <= 30) return 25;
+  return 12;
+}
+function ratingOrInfer(value, boost) {
+  const n = Number(value);
+  if (isFinite(n) && n >= 1 && n <= 5) return { rating: n, inferred: false };
+  return { rating: clamp(3 + boost, 1, 5), inferred: true };
+}
+function scoreTask(input, now) {
+  now = now || new Date();
+  const text = ((input.title || "") + " " + (input.description || "")).toLowerCase();
+  const crit = findWords(text, CRITICAL_WORDS);
+  const imp = findWords(text, IMPORTANT_WORDS);
+  const low = findWords(text, LOW_WORDS);
+  const impact = ratingOrInfer(input.impact, imp.length ? 1 : 0);
+  const importance = ratingOrInfer(input.importance, imp.length || crit.length ? 1 : 0);
+  const criticality = ratingOrInfer(input.criticality, crit.length ? 2 : 0);
+  const days = daysUntilDue(input.dueDate, now);
+  const urgency = urgencyFromDays(days);
+  let boost = 0;
+  if (crit.length) boost += 6;
+  if (imp.length) boost += 3;
+  if (low.length) boost -= 8;
+  const score = clamp(Math.round(urgency * 0.35 + importance.rating * 20 * 0.25 + impact.rating * 20 * 0.2 + criticality.rating * 20 * 0.2 + boost), 0, 100);
+  const isUrgent = urgency >= 50 || crit.length > 0;
+  const importanceScore = (importance.rating * 20 + impact.rating * 20) / 2;
+  const isImportant = importanceScore >= 60 && low.length === 0;
+  let quadrant = "eliminate";
+  if (isUrgent && isImportant) quadrant = "do-now";
+  else if (!isUrgent && isImportant) quadrant = "schedule";
+  else if (isUrgent && !isImportant) quadrant = "delegate";
+  const reasons = [];
+  if (days === null) reasons.push("No due date set, so urgency is low (20/100).");
+  else if (days < 0) reasons.push("Overdue by " + Math.abs(days) + " day(s), so urgency is 100/100.");
+  else if (days === 0) reasons.push("Due today, so urgency is 95/100.");
+  else reasons.push("Due in " + days + " day(s), so urgency is " + urgency + "/100.");
+  reasons.push("Impact " + impact.rating + "/5, importance " + importance.rating + "/5, criticality " + criticality.rating + "/5.");
+  if (crit.length) reasons.push("Description mentions \"" + crit[0] + "\", which raises criticality.");
+  else if (imp.length) reasons.push("Description mentions \"" + imp[0] + "\", which raises importance.");
+  else if (low.length) reasons.push("Description mentions \"" + low[0] + "\", which lowers the score.");
+  if (impact.inferred || importance.inferred || criticality.inferred) reasons.push("Some ratings were inferred from the description because they were not set.");
+  reasons.push("Placed in " + Q_LABEL[quadrant] + ".");
+  return { score, quadrant, reasoning: reasons.join(" "), impact: impact.rating, importance: importance.rating, criticality: criticality.rating };
+}
+
+/* ---------- Storage (localStorage) ---------- */
+const KEY = "dofirst.tasks.v1";
+let tasks = [];
+try { tasks = JSON.parse(localStorage.getItem(KEY) || "[]"); if (!Array.isArray(tasks)) tasks = []; } catch (e) { tasks = []; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(tasks)); } catch (e) {} }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 9); }
+function nextSort(q) { const inQ = tasks.filter(t => t.quadrant === q); return inQ.length ? Math.max.apply(null, inQ.map(t => t.sortOrder || 0)) + 1 : 0; }
+
+/* ---------- UI ---------- */
+const state = { filter: "all", search: "", showDone: true };
+const $ = (s) => document.querySelector(s);
+const board = $("#board");
+function el(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+function visible() {
+  const q = state.search.trim().toLowerCase();
+  return tasks.filter(t => {
+    if (state.filter !== "all" && t.context !== state.filter) return false;
+    if (!state.showDone && t.status === "done") return false;
+    if (q && ((t.title + " " + (t.description || "")).toLowerCase().indexOf(q) === -1)) return false;
+    return true;
+  });
+}
+function applyScore(task, s) { task.aiScore = s.score; task.aiReasoning = s.reasoning; task.impact = s.impact; task.importance = s.importance; task.criticality = s.criticality; }
+function cardFor(task) {
+  const card = el("article", "card" + (task.status === "done" ? " done" : ""));
+  card.draggable = true;
+  card.addEventListener("dragstart", (e) => { e.dataTransfer.setData("text/plain", task.id); });
+  const top = el("div", "card-top");
+  const doneBtn = el("button", "done-toggle", task.status === "done" ? "✓" : "");
+  doneBtn.type = "button";
+  doneBtn.title = task.status === "done" ? "Mark as active" : "Mark as done";
+  doneBtn.addEventListener("click", () => { task.status = task.status === "done" ? "active" : "done"; save(); render(); });
+  top.appendChild(doneBtn);
+  const body = el("div");
+  body.appendChild(el("p", "card-title", task.title));
+  if (task.description) body.appendChild(el("p", "card-desc", task.description));
+  const meta = el("div", "meta");
+  if (typeof task.aiScore === "number") meta.appendChild(el("span", "chip score", "AI " + task.aiScore));
+  meta.appendChild(el("span", "chip", task.context === "personal" ? "Personal" : "Work"));
+  if (task.dueDate) {
+    const days = daysUntilDue(task.dueDate, new Date());
+    const chip = el("span", "chip", days === 0 ? "Due today" : days === 1 ? "Due tomorrow" : days < 0 ? "Overdue: " + task.dueDate : "Due " + task.dueDate);
+    if (days <= 0 && task.status !== "done") chip.classList.add("overdue");
+    meta.appendChild(chip);
+  }
+  meta.appendChild(el("span", "chip", "Impact " + (task.impact ?? "-") + "/5"));
+  meta.appendChild(el("span", "chip", "Importance " + (task.importance ?? "-") + "/5"));
+  meta.appendChild(el("span", "chip", "Criticality " + (task.criticality ?? "-") + "/5"));
+  body.appendChild(meta);
+  if (task.aiReasoning) body.appendChild(el("p", "reasoning", task.aiReasoning));
+  const actions = el("div", "card-actions");
+  const scoreBtn = el("button", "", "AI Place"); scoreBtn.type = "button";
+  scoreBtn.addEventListener("click", () => { const s = scoreTask(task); applyScore(task, s); if (s.quadrant !== task.quadrant) { task.sortOrder = nextSort(s.quadrant); task.quadrant = s.quadrant; } save(); render(); });
+  const editBtn = el("button", "", "Edit"); editBtn.type = "button";
+  editBtn.addEventListener("click", () => openEdit(task));
+  const delBtn = el("button", "", "Delete"); delBtn.type = "button";
+  delBtn.addEventListener("click", () => { if (confirm("Delete \"" + task.title + "\"?")) { tasks = tasks.filter(t => t.id !== task.id); save(); render(); } });
+  const move = document.createElement("select");
+  move.setAttribute("aria-label", "Move to quadrant");
+  QUADRANTS.forEach(q => { const o = document.createElement("option"); o.value = q.id; o.textContent = "Move: " + q.label; o.selected = q.id === task.quadrant; move.appendChild(o); });
+  move.addEventListener("change", () => { task.sortOrder = nextSort(move.value); task.quadrant = move.value; save(); render(); });
+  actions.append(scoreBtn, editBtn, delBtn, move);
+  body.appendChild(actions);
+  top.appendChild(body);
+  card.appendChild(top);
+  return card;
+}
+function render() {
+  const vis = visible();
+  const active = tasks.filter(t => t.status !== "done").length;
+  $("#counts").textContent = active + " active · " + (tasks.length - active) + " done";
+  board.innerHTML = "";
+  QUADRANTS.forEach(q => {
+    const section = el("section", "quadrant");
+    section.dataset.q = q.id;
+    section.addEventListener("dragover", (e) => { e.preventDefault(); section.classList.add("drag-over"); });
+    section.addEventListener("dragleave", () => section.classList.remove("drag-over"));
+    section.addEventListener("drop", (e) => {
+      e.preventDefault(); section.classList.remove("drag-over");
+      const id = e.dataTransfer.getData("text/plain");
+      const t = tasks.find(x => x.id === id);
+      if (t && t.quadrant !== q.id) { t.sortOrder = nextSort(q.id); t.quadrant = q.id; save(); render(); }
+    });
+    const head = el("div", "quadrant-head");
+    const inQ = vis.filter(t => t.quadrant === q.id).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    head.appendChild(el("h2", "", q.label + " (" + inQ.length + ")"));
+    head.appendChild(el("span", "q-sub", q.sub));
+    section.appendChild(head);
+    const cards = el("div", "cards");
+    if (!inQ.length) cards.appendChild(el("p", "empty", "No tasks here. Drag one in, or add it above."));
+    inQ.forEach(t => cards.appendChild(cardFor(t)));
+    section.appendChild(cards);
+    board.appendChild(section);
+  });
+}
+$("#quick-add").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const title = $("#quick-title").value.trim();
+  if (!title) return;
+  const input = { title, description: "", dueDate: $("#quick-due").value || null };
+  const s = scoreTask(input);
+  const task = { id: uid(), title, description: "", context: "work", dueDate: input.dueDate, status: "active", sortOrder: 0 };
+  applyScore(task, s);
+  task.quadrant = s.quadrant;
+  task.sortOrder = nextSort(task.quadrant);
+  tasks.push(task); save();
+  $("#quick-title").value = ""; $("#quick-due").value = "";
+  render();
+});
+const detailForm = $("#detail-form");
+$("#toggle-detail").addEventListener("click", () => { detailForm.hidden = !detailForm.hidden; if (!detailForm.hidden) $("#f-title").focus(); });
+$("#detail-cancel").addEventListener("click", () => { detailForm.reset(); $("#f-id").value = ""; $("#detail-submit").textContent = "Save task"; detailForm.hidden = true; });
+function openEdit(task) {
+  detailForm.hidden = false;
+  $("#f-id").value = task.id; $("#f-title").value = task.title; $("#f-desc").value = task.description || "";
+  $("#f-due").value = task.dueDate || ""; $("#f-context").value = task.context; $("#f-quadrant").value = task.quadrant;
+  $("#f-impact").value = task.impact ?? ""; $("#f-importance").value = task.importance ?? ""; $("#f-criticality").value = task.criticality ?? "";
+  $("#detail-submit").textContent = "Save changes"; $("#f-title").focus();
+}
+detailForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const placement = $("#f-quadrant").value;
+  const fields = {
+    title: $("#f-title").value.trim(), description: $("#f-desc").value.trim(),
+    dueDate: $("#f-due").value || null, context: $("#f-context").value,
+    impact: $("#f-impact").value || null, importance: $("#f-importance").value || null, criticality: $("#f-criticality").value || null,
+  };
+  const id = $("#f-id").value;
+  if (id) {
+    const t = tasks.find(x => x.id === id);
+    if (t) {
+      Object.assign(t, fields);
+      if (placement === "ai") { const s = scoreTask(t); applyScore(t, s); if (s.quadrant !== t.quadrant) { t.sortOrder = nextSort(s.quadrant); t.quadrant = s.quadrant; } }
+      else if (placement !== t.quadrant) { t.sortOrder = nextSort(placement); t.quadrant = placement; }
+    }
+  } else {
+    const task = Object.assign({ id: uid(), status: "active", sortOrder: 0, aiScore: null, aiReasoning: null }, fields);
+    if (placement === "ai") { const s = scoreTask(task); applyScore(task, s); task.quadrant = s.quadrant; }
+    else { task.quadrant = placement; task.impact = task.impact ?? 3; task.importance = task.importance ?? 3; task.criticality = task.criticality ?? 3; }
+    task.sortOrder = nextSort(task.quadrant);
+    tasks.push(task);
+  }
+  save();
+  detailForm.reset(); $("#f-id").value = ""; $("#detail-submit").textContent = "Save task"; detailForm.hidden = true;
+  render();
+});
+$("#score-all").addEventListener("click", () => {
+  tasks.forEach(t => { if (t.status === "done") return; const s = scoreTask(t); applyScore(t, s); if (s.quadrant !== t.quadrant) { t.sortOrder = nextSort(s.quadrant); t.quadrant = s.quadrant; } });
+  save(); render();
+});
+document.querySelectorAll("[data-filter]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-filter]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active"); state.filter = btn.dataset.filter; render();
+  });
+});
+$("#search").addEventListener("input", (e) => { state.search = e.target.value; render(); });
+$("#show-done").addEventListener("change", (e) => { state.showDone = e.target.checked; render(); });
+render();
+</script>
+</body>
+</html>

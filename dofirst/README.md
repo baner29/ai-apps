@@ -32,6 +32,7 @@ DoFirst uses the Eisenhower Matrix. Each task sits in one of four quadrants, bas
 - **Filters and search:** Filter the board by All, Work, or Personal, search by title, and show or hide completed tasks.
 - **Full task control:** Edit a task, mark it done, or delete it from its card.
 - **Persistent by default:** Tasks are saved to a file on your computer, so your board survives restarts, updates, and reinstalls.
+- **Run anywhere:** A "Run anywhere" panel inside the app lists every way to run DoFirst, from self-hosting on your own computer to managed AI hosting platforms. A portable single-file edition (`standalone.html`) runs on any platform that hosts a single HTML file.
 
 ---
 
@@ -109,6 +110,41 @@ The file lives outside the app folder, so updating or reinstalling DoFirst never
 
 ---
 
+## Run DoFirst anywhere
+
+DoFirst is not tied to one platform. The same app runs in three ways:
+
+1. **Self-hosted (the edition in this folder):** Your computer runs the server, your tasks live in a file on that computer, and nothing leaves the machine. See Installation above.
+2. **Portable single-file edition:** `standalone.html`, in this folder, is the complete app in one HTML file: board, drag and drop, and the scoring engine, with tasks saved in the browser's local storage. Double-click it to open it in any browser, host it on any static web host, or take it to a managed AI platform below. The running app also offers it as a download from the **Run anywhere** panel.
+3. **Managed AI hosting platforms:** The platforms below can host a version of DoFirst for you. In most cases you either paste in the single-file edition, import this repository from GitHub, or describe DoFirst and let the platform rebuild it. Your tasks then live on that platform, under that platform's account and rules.
+
+### Managed AI hosting platforms
+
+| Platform | Their hosting feature | How to add DoFirst | Good to know |
+| --- | --- | --- | --- |
+| **Anthropic Claude** | Artifacts | Start an Artifact and paste in `standalone.html`, or ask Claude to rebuild DoFirst from this README | Single-file apps. Access is by link, with no app-level login |
+| **OpenAI ChatGPT** | Sites | Ask ChatGPT to create a Site from `standalone.html` or from this repository | Hosted URL with a database, user login, and custom domains |
+| **Google Gemini** | Canvas | Open Canvas and paste in `standalone.html`, or describe DoFirst and let Gemini build it | Apps can get an auto-provisioned database for stored data |
+| **xAI Grok** | Build Mode | Describe DoFirst in Build Mode, or import the project from GitHub | Publishes to a grok.me address or your own domain. Early beta, top-tier plan at launch |
+| **Meta Muse** | Spaces | Ask Muse to build DoFirst as a Space from this README | Full-stack Spaces save data on the platform |
+| **Perplexity** | Computer | Ask Computer to build DoFirst, then publish it | Publishes to a pplx.app address, or through a connected Vercel account |
+| **Microsoft Copilot** | Copilot Pages | Share the board as a Page for viewing and editing notes | Pages suit documents, not full database apps. Use the self-hosted edition for the live board |
+| **Lovable** | Built-in hosting | Import this repository from GitHub, or describe DoFirst in a prompt | Publishes to a lovable.app address, with two-way Git sync |
+| **Bolt.new** | Bolt hosting | Import this repository from GitHub, or describe DoFirst in a prompt | Publishes to a bolt.host address, with its own database option |
+| **Replit** | Agent and Publish | Import this repository, then use Publish | Publishes to a replit.app address, with a managed database |
+| **v0 by Vercel** | Vercel deployment | Describe DoFirst or import the code, then deploy | Generates a Next.js app, so this is a rebuild rather than a copy |
+| **Base44** | Built-in backend and hosting | Describe DoFirst in a prompt and let Base44 supply the backend | A rebuild on their backend, aimed at non-technical builders |
+| **Taskade** | Genesis | Describe DoFirst and let Genesis generate the workspace | Turns the prompt into a workspace with projects, agents, and automations |
+
+### No managed app hosting (yet)
+
+- **Meta AI:** No general app-hosting feature for consumers. Use the single-file edition on any static web host, or the self-hosted edition.
+- **Hermes Agent (Nous Research):** A self-hosted agent, not a hosting platform. Point Hermes at this repository and it can clone and run the self-hosted edition for you.
+
+Platform features and plan gates change often. This list describes each platform as of November 2026.
+
+---
+
 ## How AI prioritization works
 
 The scoring engine runs locally in `lib/scorer.js`. It makes no network calls and needs no API keys. When you ask it to place a task, it weighs five inputs together:
@@ -181,6 +217,7 @@ You stay in control at every step. Dragging a task to a new quadrant overrides t
 dofirst/
   package.json          Package manifest, scripts, and the `dofirst` CLI entry
   server.js             HTTP server, JSON API, and task storage
+  standalone.html       Portable single-file edition for managed AI hosting platforms
   bin/
     dofirst.js          Command-line launcher (starts the server, opens a browser)
   lib/

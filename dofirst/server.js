@@ -217,6 +217,13 @@ export async function createAppServer(options = {}) {
 
   async function handleStatic(req, res, url) {
     let pathname = decodeURIComponent(url.pathname);
+    if (pathname === "/standalone.html") {
+      // The portable single-file edition lives at the app root, so users can
+      // download it and run it on any managed AI hosting platform.
+      const data = await readFile(join(ROOT, "standalone.html"));
+      res.writeHead(200, { "Content-Type": MIME[".html"] });
+      return res.end(data);
+    }
     if (pathname === "/") pathname = "/index.html";
     const filePath = normalize(join(PUBLIC_DIR, pathname));
     if (!filePath.startsWith(PUBLIC_DIR) || !existsSync(filePath)) {

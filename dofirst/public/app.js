@@ -279,6 +279,12 @@ detailForm.addEventListener("submit", async (e) => {
   await load();
 });
 
+$("#toggle-deploy").addEventListener("click", () => {
+  const panel = $("#deploy");
+  panel.hidden = !panel.hidden;
+  if (!panel.hidden) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
 $("#score-all").addEventListener("click", async () => {
   setStatus("Scoring every active task...");
   await api("/api/tasks/score-all", { method: "POST" });
