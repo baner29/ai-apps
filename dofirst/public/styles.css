@@ -98,8 +98,15 @@ textarea { width: 100%; resize: vertical; }
 .empty { color: var(--muted); font-size: 14px; text-align: center; padding: 18px 0; margin: 0; }
 .card {
   border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px;
-  background: var(--bg); cursor: grab;
+  background: var(--bg); cursor: grab; position: relative;
 }
+.card-tip {
+  position: absolute; left: 8px; right: 8px; bottom: calc(100% + 6px); z-index: 30;
+  background: #1f2430; color: #f4f6fb; border-radius: 8px; padding: 8px 10px;
+  font-size: 12.5px; line-height: 1.45; box-shadow: 0 8px 22px rgba(15, 18, 28, 0.28);
+  opacity: 0; visibility: hidden; transition: opacity 0.15s ease; pointer-events: none;
+}
+.card:hover .card-tip, .card:focus-within .card-tip { opacity: 1; visibility: visible; }
 .card.done { opacity: 0.55; }
 .card.done .card-title { text-decoration: line-through; }
 .card-top { display: flex; gap: 10px; align-items: flex-start; }
@@ -117,7 +124,6 @@ textarea { width: 100%; resize: vertical; }
 }
 .chip.score { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 700; }
 .chip.overdue { color: var(--do-now); border-color: var(--do-now); font-weight: 700; }
-.reasoning { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
 .card-actions { display: flex; gap: 8px; margin-top: 9px; flex-wrap: wrap; align-items: center; }
 .card-actions button {
   font-size: 12.5px; padding: 5px 10px; border-radius: 7px; cursor: pointer;

@@ -66,7 +66,7 @@ The engine then infers a rating from the description.
 The starting value is 3.
 A critical keyword raises the inferred criticality to 5.
 An important keyword raises the inferred impact and importance to 4.
-The reasoning text on the card tells you when a rating is inferred.
+The reasoning text tells you when a rating is inferred.
 
 ## The quadrant
 
@@ -88,7 +88,8 @@ The flags give the quadrant:
 
 Each scored task gets a short reasoning text.
 The text shows the urgency value, the three ratings, and any keyword effect.
-The card on the board shows the score and the reasoning text.
+The card on the board shows the score.
+Hover on the card to see the reasoning text in a tooltip.
 
 ## Your control
 

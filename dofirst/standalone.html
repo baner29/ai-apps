@@ -61,7 +61,9 @@
   .quadrant[data-q="delegate"]{ --q:var(--delegate); } .quadrant[data-q="eliminate"]{ --q:var(--eliminate); }
   .cards{ padding:6px 12px 14px; display:flex; flex-direction:column; gap:10px; flex:1; }
   .empty{ color:var(--muted); font-size:14px; text-align:center; padding:18px 0; margin:0; }
-  .card{ border:1px solid var(--border); border-radius:11px; padding:10px 12px; background:var(--bg); cursor:grab; }
+  .card{ border:1px solid var(--border); border-radius:11px; padding:10px 12px; background:var(--bg); cursor:grab; position:relative; }
+  .card-tip{ position:absolute; left:8px; right:8px; bottom:calc(100% + 6px); z-index:30; background:#1f2430; color:#f4f6fb; border-radius:8px; padding:8px 10px; font-size:12.5px; line-height:1.45; box-shadow:0 8px 22px rgba(15,18,28,.28); opacity:0; visibility:hidden; transition:opacity .15s ease; pointer-events:none; }
+  .card:hover .card-tip, .card:focus-within .card-tip{ opacity:1; visibility:visible; }
   .card.done{ opacity:.55; } .card.done .card-title{ text-decoration:line-through; }
   .card-top{ display:flex; gap:10px; align-items:flex-start; }
   .done-toggle{ width:26px; height:26px; border-radius:50%; flex:0 0 26px; cursor:pointer; border:2px solid var(--muted); background:transparent; color:var(--accent-text); font-size:14px; line-height:1; padding:0; }
@@ -72,7 +74,6 @@
   .chip{ border:1px solid var(--border); border-radius:999px; padding:2px 8px; color:var(--muted); }
   .chip.score{ background:var(--accent); border-color:var(--accent); color:var(--accent-text); font-weight:700; }
   .chip.overdue{ color:var(--do-now); border-color:var(--do-now); font-weight:700; }
-  .reasoning{ font-size:12.5px; color:var(--muted); margin:8px 0 0; }
   .card-actions{ display:flex; gap:8px; margin-top:9px; flex-wrap:wrap; align-items:center; }
   .card-actions button{ font-size:12.5px; padding:5px 10px; border-radius:7px; cursor:pointer; border:1px solid var(--border); background:var(--surface); color:var(--text); }
   .card-actions select{ font-size:12.5px; padding:5px 7px; margin-left:auto; }
@@ -265,7 +266,7 @@ function cardFor(task) {
   body.appendChild(el("p", "card-title", task.title));
   if (task.description) body.appendChild(el("p", "card-desc", task.description));
   const meta = el("div", "meta");
-  if (typeof task.aiScore === "number") meta.appendChild(el("span", "chip score", "AI " + task.aiScore));
+  if (typeof task.aiScore === "number") meta.appendChild(el("span", "chip score", "AI " + task.aiScore + " ⓘ"));
   meta.appendChild(el("span", "chip", task.context === "personal" ? "Personal" : "Work"));
   if (task.dueDate) {
     const days = daysUntilDue(task.dueDate, new Date());
@@ -277,7 +278,6 @@ function cardFor(task) {
   meta.appendChild(el("span", "chip", "Importance " + (task.importance ?? "-") + "/5"));
   meta.appendChild(el("span", "chip", "Criticality " + (task.criticality ?? "-") + "/5"));
   body.appendChild(meta);
-  if (task.aiReasoning) body.appendChild(el("p", "reasoning", task.aiReasoning));
   const actions = el("div", "card-actions");
   const scoreBtn = el("button", "", "AI Place"); scoreBtn.type = "button";
   scoreBtn.addEventListener("click", () => { const s = scoreTask(task); applyScore(task, s); if (s.quadrant !== task.quadrant) { task.sortOrder = nextSort(s.quadrant); task.quadrant = s.quadrant; } save(); render(); });
@@ -293,6 +293,7 @@ function cardFor(task) {
   body.appendChild(actions);
   top.appendChild(body);
   card.appendChild(top);
+  if (task.aiReasoning) card.appendChild(el("span", "card-tip", task.aiReasoning));
   return card;
 }
 function render() {

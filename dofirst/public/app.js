@@ -99,7 +99,7 @@ function cardFor(task) {
 
   const meta = el("div", "meta");
   if (typeof task.aiScore === "number") {
-    meta.appendChild(el("span", "chip score", `AI ${task.aiScore}`));
+    meta.appendChild(el("span", "chip score", `AI ${task.aiScore} ⓘ`));
   }
   meta.appendChild(el("span", "chip", task.context === "personal" ? "Personal" : "Work"));
   const due = dueChip(task);
@@ -109,7 +109,6 @@ function cardFor(task) {
   meta.appendChild(el("span", "chip", `Criticality ${task.criticality ?? "-"}/5`));
   body.appendChild(meta);
 
-  if (task.aiReasoning) body.appendChild(el("p", "reasoning", task.aiReasoning));
 
   const actions = el("div", "card-actions");
   const scoreBtn = el("button", "", "AI Place");
@@ -151,6 +150,7 @@ function cardFor(task) {
 
   top.appendChild(body);
   card.appendChild(top);
+  if (task.aiReasoning) card.appendChild(el("span", "card-tip", task.aiReasoning));
   return card;
 }
 

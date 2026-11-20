@@ -30,7 +30,7 @@ DoFirst saves your tasks in a file on your computer.
 - Quick add: enter a title and a due date. The engine places the task.
 - Detailed add: enter a description, a context, and ratings for impact, importance, and criticality.
 - Manual placement or AI placement, task by task.
-- AI score and reasoning text on each scored card.
+- AI score on each scored card. Hover on a card to see the reasoning text in a tooltip.
 - **AI Place** scores one task again. **AI Prioritize All** scores all active tasks again.
 - Filters for Work and Personal, a search field, and a control to show or hide done tasks.
 - Edit, complete, and delete controls on each card.
