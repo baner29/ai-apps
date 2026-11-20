@@ -1,5 +1,9 @@
 # DoFirst: Task Prioritization Matrix with AI Scoring
 
+![DoFirst demo: add a task and watch the AI place it](demo.gif)
+
+[Watch the demo as an MP4 video](demo.mp4)
+
 DoFirst is a task prioritization app.
 Use DoFirst for personal tasks and for work tasks.
 DoFirst puts each task on a matrix with four quadrants.
@@ -115,6 +119,8 @@ You keep no server and no database.
 ```text
 dofirst/
   README.md             This file
+  demo.gif              Demo animation, shown at the top of this file
+  demo.mp4              The same demo as a video file
   package.json          Package data, scripts, and the command entry
   server.js             HTTP server, API, and data storage
   standalone.html       Complete app in one file, for managed platforms
