@@ -1,0 +1,57 @@
+services:
+  # Default service: Local Authoring Studio + Candidate Preview
+  # Start with: docker compose up --build
+  interview-studio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_CLOUD_SDKS: "true"
+    image: bigbank:latest
+    ports:
+      - "8080:8080"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      APP_MODE: "local"
+      PORT: "8080"
+      SANDBOX_OS_USER: "sandbox"
+      DATABASE_PATH: "/app/data/interview.db"
+      BUNDLE_PATH: "/app/bundle/interview.db"
+      LOCAL_REPORTS_DIR: "/app/data/reports"
+    volumes:
+      - ./data:/app/data
+      - ./bundle:/app/bundle
+    restart: unless-stopped
+
+  # Optional profile: Production-like Locked Candidate Portal
+  # First generate bundle/interview.db via Admin Studio -> Deploy or:
+  #   python -m backend.cli package
+  # Then start with:
+  #   docker compose --profile candidate up --build
+  interview-candidate:
+    profiles:
+      - candidate
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_CLOUD_SDKS: "true"
+    image: bigbank:latest
+    ports:
+      - "8081:8080"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      APP_MODE: "candidate"
+      PORT: "8080"
+      SANDBOX_OS_USER: "sandbox"
+      BUNDLE_PATH: "/app/bundle/interview.db"
+      RUNTIME_DB_PATH: "/tmp/runtime.db"
+    volumes:
+      - ./bundle:/app/bundle:ro
+    tmpfs:
+      - /tmp:rw,nosuid,size=512m
+    restart: unless-stopped

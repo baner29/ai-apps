@@ -1,0 +1,414 @@
+questions:
+  - external_key: de-sql-window-01
+    title: SQL Window Functions vs GROUP BY
+    prompt: >-
+      Which statement accurately describes the key difference between a SQL window
+      function (`OVER (...)`) and a `GROUP BY` aggregation?
+    format: mcq
+    difficulty: easy
+    tags:
+      - data-engineering
+      - sql
+    options:
+      - Window functions preserve individual input rows while computing values across a related frame, whereas GROUP BY collapses rows into one row per group.
+      - Window functions can only run on indexed integer columns, whereas GROUP BY works on any data type.
+      - Window functions execute before the WHERE clause, whereas GROUP BY executes after ORDER BY.
+      - Window functions cannot use aggregate functions such as SUM or AVG.
+    answer_indices:
+      - 0
+    default_points: 10
+    expected_answer: >-
+      Window functions retain the original row granularity while computing values across
+      partitions and frames defined by OVER (...); GROUP BY collapses each group into a
+      single output row.
+    evaluation_rubric: >-
+      10 pts for selecting option 0 (exact match).
+    active: true
+
+  - external_key: de-cdc-streaming-02
+    title: Idempotent CDC Pipeline Design
+    prompt: |-
+      You are designing a near-real-time Change Data Capture (CDC) ingestion pipeline from a transactional PostgreSQL database into an analytical lakehouse table.
+
+      Address the following in your design:
+      1. How do you guarantee idempotent writes when upstream events are delivered at-least-once or out of order?
+      2. How do you handle hard deletes (`DELETE` events) and late-arriving updates?
+      3. How do you manage backward-compatible and breaking schema evolution without halting ingestion?
+      4. What operational SLIs and dead-letter handling would you put in place?
+    format: text
+    difficulty: medium
+    tags:
+      - data-engineering
+      - architecture
+      - streaming
+    default_points: 20
+    expected_answer: >-
+      Use log-based CDC (e.g., WAL/Debezium) into a partitioned message broker keyed by
+      primary key. Stage raw immutable bronze events with LSN/event timestamps, then
+      apply deterministic MERGE/upsert into Iceberg/Delta silver tables ordered by LSN or
+      commit timestamp to make replays idempotent and prevent stale overwrites. Track
+      deletes via tombstones or soft-delete flags (`is_deleted`, `deleted_at`) for auditability.
+      Enforce schema contracts via a Schema Registry; auto-merge additive nullable columns
+      and route incompatible payloads to a quarantine/dead-letter topic with alerting on
+      consumer lag, DLQ rate, and freshness SLA.
+    evaluation_rubric: |-
+      - 6 pts: Explains idempotent MERGE/deduplication using LSN or commit timestamp ordering
+      - 5 pts: Addresses hard deletes (tombstones/soft-deletes) and late/out-of-order events
+      - 5 pts: Proposes concrete schema evolution strategy (registry, additive vs breaking changes)
+      - 4 pts: Defines clear SLIs (freshness, lag, DLQ volume) and replay/recovery workflow
+    active: true
+
+  - external_key: de-pandas-agg-03
+    title: Sessionize Events & Compute Rolling Revenue
+    prompt: |-
+      Using the starter pandas DataFrame `events` below:
+      1. Deduplicate identical `event_id` rows, keeping the record with the latest `ingested_at` timestamp.
+      2. Assign a `session_id` per `user_id` where a new session starts whenever the gap between consecutive events for that user exceeds **30 minutes**.
+      3. Compute a summary DataFrame showing, for each `user_id`, the total number of sessions and total `revenue`.
+      4. Print or return the final summary sorted by `user_id`.
+    format: notebook
+    difficulty: hard
+    tags:
+      - data-engineering
+      - python
+      - pandas
+    code_language: python
+    starter_code: |
+      import pandas as pd
+
+      events = pd.DataFrame([
+          {"event_id": "e1", "user_id": "u1", "event_ts": "2025-02-01T10:00:00Z", "ingested_at": "2025-02-01T10:00:05Z", "revenue": 25.0},
+          {"event_id": "e1", "user_id": "u1", "event_ts": "2025-02-01T10:00:00Z", "ingested_at": "2025-02-01T10:01:00Z", "revenue": 30.0},
+          {"event_id": "e2", "user_id": "u1", "event_ts": "2025-02-01T10:20:00Z", "ingested_at": "2025-02-01T10:20:02Z", "revenue": 15.0},
+          {"event_id": "e3", "user_id": "u1", "event_ts": "2025-02-01T11:05:00Z", "ingested_at": "2025-02-01T11:05:01Z", "revenue": 40.0},
+          {"event_id": "e4", "user_id": "u2", "event_ts": "2025-02-01T09:00:00Z", "ingested_at": "2025-02-01T09:00:03Z", "revenue": 50.0},
+          {"event_id": "e5", "user_id": "u2", "event_ts": "2025-02-01T09:45:00Z", "ingested_at": "2025-02-01T09:45:04Z", "revenue": 20.0},
+      ])
+      events
+    allow_execution: true
+    default_points: 30
+    expected_answer: >-
+      Convert `event_ts` and `ingested_at` to UTC datetimes. Sort by `ingested_at` and
+      drop duplicates on `event_id` with `keep="last"` (yielding revenue 30.0 for e1).
+      Sort by `["user_id", "event_ts"]`, compute per-user time diff via `groupby("user_id")["event_ts"].diff()`,
+      flag new sessions where `diff.isna() | (diff > pd.Timedelta(minutes=30))`, and apply
+      cumulative sum per user. Expected summary: u1 has 2 sessions and 85.0 revenue;
+      u2 has 2 sessions and 70.0 revenue.
+    evaluation_rubric: |-
+      - 10 pts: Correctly parses timestamps and deduplicates on event_id keeping latest ingested_at
+      - 12 pts: Accurate per-user 30-minute gap sessionization using groupby + diff + cumsum
+      - 8 pts: Clean aggregation producing expected totals (u1: 2 sessions, 85.0; u2: 2 sessions, 70.0) with runnable verified output
+    active: true
+
+  - external_key: ai-rag-eval-04
+    title: RAG Retrieval Failure Modes
+    prompt: >-
+      Select ALL valid techniques that directly improve retrieval recall or answer
+      groundedness in a production Retrieval-Augmented Generation (RAG) system.
+    format: mcq
+    difficulty: easy
+    tags:
+      - ai-engineering
+      - llm
+      - rag
+    options:
+      - Combining dense vector search with lexical BM25 retrieval (hybrid search) and cross-encoder reranking.
+      - Increasing the LLM decoding temperature to 1.5 so the model generates more creative citations.
+      - Enforcing metadata filtering and citation grounding checks against retrieved context chunks.
+      - Removing document chunk overlap entirely so every token appears in only one chunk.
+    answer_indices:
+      - 0
+      - 2
+    default_points: 10
+    expected_answer: >-
+      Hybrid search with reranking improves retrieval recall and precision for both exact
+      terms and semantics, while metadata filtering and groundedness checks reduce
+      irrelevant context and unsupported claims. High temperature increases hallucination
+      risk, and zero overlap can sever cross-boundary context.
+    evaluation_rubric: >-
+      10 pts for selecting both options 0 and 2 (exact multi-select match).
+    active: true
+
+  - external_key: ai-rag-chunking-05
+    title: Enterprise RAG Chunking & Evaluation Strategy
+    prompt: |-
+      Your team is building a RAG assistant over 250,000 internal engineering runbooks, API specs, and Markdown tables.
+
+      1. Compare **fixed-size**, **structure-aware/semantic**, and **parent-child (hierarchical)** chunking for this corpus.
+      2. Explain how you would preserve tables, code blocks, and document hierarchy during indexing.
+      3. Design an evaluation harness separating **retrieval quality** from **generation quality**, naming specific metrics and how you would detect regressions in CI.
+    format: text
+    difficulty: medium
+    tags:
+      - ai-engineering
+      - llm
+      - architecture
+    default_points: 20
+    expected_answer: >-
+      Fixed-size chunking is simple and predictable but splits tables, code blocks, and
+      section headings mid-thought. Structure-aware chunking splits on Markdown headings,
+      preserving atomic code/table blocks and prepending breadcrumb headers (doc title +
+      section path). Parent-child chunking indexes small child chunks for sharp vector
+      matching while passing the larger parent section to the LLM for coherent context.
+      Evaluate retrieval offline with a golden query-document set measuring Recall@k,
+      MRR, and NDCG@k; evaluate generation with faithfulness/groundedness, answer
+      relevance, citation accuracy, and latency/cost budgets gated in CI.
+    evaluation_rubric: |-
+      - 7 pts: Clearly compares fixed-size, structure-aware, and parent-child chunking tradeoffs
+      - 6 pts: Practical handling of tables, code blocks, and section metadata/breadcrumbs
+      - 7 pts: Concrete retrieval vs generation metrics (Recall@k/MRR/NDCG + faithfulness/relevance) and CI regression strategy
+    active: true
+
+  - external_key: ai-embedding-search-06
+    title: Hybrid BM25 & Cosine Vector Reranking
+    prompt: |-
+      Implement a hybrid retrieval scorer in Python using `numpy`:
+      1. Compute cosine similarity between `query_vec` and each document embedding in `doc_vecs`.
+      2. Rank documents separately by vector cosine similarity (descending) and by the provided `bm25_scores` (descending).
+      3. Fuse both rankings using **Reciprocal Rank Fusion (RRF)**: `score(d) = 1 / (k + rank_vec(d)) + 1 / (k + rank_bm25(d))` with `k = 60` and 1-based ranks.
+      4. Print the ranked list of `(doc_id, rrf_score, cosine_sim, bm25_score)` from highest to lowest RRF score.
+    format: notebook
+    difficulty: hard
+    tags:
+      - ai-engineering
+      - python
+      - rag
+    code_language: python
+    starter_code: |
+      import numpy as np
+
+      doc_ids = ["doc_a", "doc_b", "doc_c", "doc_d"]
+      query_vec = np.array([0.8, 0.6, 0.0, 0.1])
+      doc_vecs = np.array([
+          [0.75, 0.65, 0.05, 0.0],   # doc_a
+          [0.10, 0.20, 0.90, 0.3],   # doc_b
+          [0.70, 0.55, 0.10, 0.2],   # doc_c
+          [0.95, 0.10, 0.00, 0.0],   # doc_d
+      ])
+      bm25_scores = np.array([4.2, 1.1, 8.7, 5.5])
+    allow_execution: true
+    default_points: 30
+    expected_answer: >-
+      Normalize vectors safely (guarding against zero-norm vectors) to compute cosine
+      similarity via dot product. Compute 1-based ranks for cosine similarity and BM25
+      scores, sum `1 / (60 + rank)` across both signals, and sort descending. `doc_a`
+      and `doc_c` surface at the top due to strong combined semantic + lexical rank.
+    evaluation_rubric: |-
+      - 10 pts: Correct vectorized cosine similarity calculation with zero-norm safety
+      - 12 pts: Accurate 1-based rank extraction and RRF formula implementation (k=60)
+      - 8 pts: Clean sorted output showing doc_id and component scores with verified execution
+    active: true
+
+  - external_key: swe-http-idempotency-07
+    title: HTTP Idempotency & Retry Safety
+    prompt: >-
+      A client invokes `POST /v1/payments` over an unreliable mobile network and
+      receives a connection timeout before reading the HTTP response. What is the
+      safest server-side design to prevent double-charging on client retry?
+    format: mcq
+    difficulty: easy
+    tags:
+      - software-engineering
+      - backend
+      - api-design
+    options:
+      - Require a client-generated Idempotency-Key header stored atomically with the payment record/response so retries with the same key return the original outcome.
+      - Switch the endpoint from POST to GET so proxies automatically cache the request.
+      - Tell clients never to retry timed-out POST requests and reconcile manually at month-end.
+      - Deduplicate solely on `(user_id, amount)` across all time without a key or time window.
+    answer_indices:
+      - 0
+    default_points: 10
+    expected_answer: >-
+      Persist a client-generated Idempotency-Key (scoped to the caller/route with a
+      unique constraint and payload fingerprint check) so retried requests safely replay
+      the original result without duplicating side effects.
+    evaluation_rubric: >-
+      10 pts for selecting option 0 (exact match).
+    active: true
+
+  - external_key: swe-rate-limiter-08
+    title: Sliding Window Rate Limiter
+    prompt: |-
+      Implement a thread-safe sliding-window log rate limiter class `SlidingWindowRateLimiter`:
+      - `__init__(self, max_requests: int, window_seconds: float)`
+      - `allow_request(self, client_id: str, now: float) -> bool`
+
+      Requirements:
+      1. Allow at most `max_requests` within the rolling window `(now - window_seconds, now]`.
+      2. Evict expired timestamps so memory does not grow unboundedly for active clients.
+      3. Ensure thread safety under concurrent calls for the same or different `client_id`s.
+      4. Briefly note in comments how you would adapt this design to a multi-instance distributed deployment (e.g., Redis).
+    format: code
+    difficulty: medium
+    tags:
+      - software-engineering
+      - system-design
+      - distributed-systems
+    code_language: python
+    starter_code: |
+      from collections import deque
+      import threading
+
+
+      class SlidingWindowRateLimiter:
+          def __init__(self, max_requests: int, window_seconds: float) -> None:
+              # TODO: initialize state and synchronization primitives
+              pass
+
+          def allow_request(self, client_id: str, now: float) -> bool:
+              # TODO: evict timestamps outside (now - window_seconds, now] and enforce limit
+              pass
+    allow_execution: false
+    default_points: 20
+    expected_answer: >-
+      Maintain a `dict[str, deque[float]]` guarded by a lock (or per-client locks).
+      On `allow_request(client_id, now)`, pop timestamps `<= now - window_seconds` from
+      the left of the client's deque; if `len(dq) < max_requests`, append `now` and
+      return `True`, else return `False`. For distributed deployments, use Redis sorted
+      sets (`ZREMRANGEBYSCORE`, `ZCARD`, `ZADD`, `EXPIRE`) wrapped in an atomic Lua
+      script or sliding-window counter approximation.
+    evaluation_rubric: |-
+      - 8 pts: Exact sliding-window boundary logic and eviction of expired timestamps
+      - 6 pts: Correct thread-safety (lock scoping, avoiding race conditions on dict/deque)
+      - 6 pts: Clean code, edge-case validation (max_requests <= 0), and thoughtful distributed Redis scaling note
+    active: true
+
+  - external_key: dsa-lru-cache-09
+    title: O(1) LRU Cache Implementation
+    prompt: |-
+      Design and implement an `LRUCache` supporting:
+      - `get(key: int) -> int`: Return the cached value if present (marking it most-recently-used), or `-1` otherwise.
+      - `put(key: int, value: int) -> None`: Insert or update `key`, evicting the least-recently-used key when capacity is exceeded.
+
+      Both operations must run in **O(1)** average time complexity. State the space complexity in a brief comment.
+    format: code
+    difficulty: medium
+    tags:
+      - dsa
+      - algorithms
+      - data-structures
+    code_language: python
+    starter_code: |
+      class LRUCache:
+          def __init__(self, capacity: int) -> None:
+              pass
+
+          def get(self, key: int) -> int:
+              pass
+
+          def put(self, key: int, value: int) -> None:
+              pass
+    allow_execution: false
+    default_points: 20
+    expected_answer: >-
+      Use a hash map mapping keys to doubly-linked-list nodes with dummy head/tail
+      sentinels (or Python `collections.OrderedDict` with `move_to_end` and
+      `popitem(last=False)`). Both `get` and `put` run in O(1) average time and
+      O(capacity) space.
+    evaluation_rubric: |-
+      - 10 pts: Correct O(1) get/put with proper recency promotion and LRU eviction
+      - 5 pts: Handles edge cases (updating existing key without evicting, capacity=1)
+      - 5 pts: Clean implementation and accurate O(1) time / O(capacity) space analysis
+    active: true
+
+  - external_key: dsa-graph-topo-10
+    title: DAG Task Scheduler with Cycle Detection
+    prompt: |-
+      You are given `tasks: list[str]` and directed prerequisites `dependencies: list[tuple[str, str]]`, where `(a, b)` means task `a` must complete before task `b`.
+
+      Implement `schedule_tasks(tasks, dependencies) -> list[str]` that returns a valid topological execution order containing every task, or returns an empty list `[]` if a cycle makes scheduling impossible.
+
+      Include a brief comment analyzing time and space complexity in terms of `V = len(tasks)` and `E = len(dependencies)`.
+    format: code
+    difficulty: hard
+    tags:
+      - dsa
+      - algorithms
+      - graphs
+    code_language: python
+    starter_code: |
+      from collections import deque
+
+
+      def schedule_tasks(
+          tasks: list[str], dependencies: list[tuple[str, str]]
+      ) -> list[str]:
+          # TODO: build adjacency list + in-degree map and return topological order or []
+          pass
+    allow_execution: false
+    default_points: 30
+    expected_answer: >-
+      Use Kahn's algorithm (BFS topological sort): initialize adjacency lists and in-degree
+      counts for all `V` tasks, enqueue all zero-in-degree nodes, repeatedly pop and
+      decrement neighbors' in-degrees, enqueuing any neighbor reaching 0. Return the
+      result list if its length equals `len(tasks)`, else `[]` (cycle detected).
+      Time complexity: O(V + E); Space complexity: O(V + E). Handle duplicate edges
+      and self-loops cleanly.
+    evaluation_rubric: |-
+      - 12 pts: Correct graph construction and Kahn's BFS or 3-color DFS topological sort
+      - 10 pts: Accurate cycle detection (including disconnected components and self-loops)
+      - 8 pts: Edge-case handling (empty input, duplicate edges) and exact O(V + E) time/space analysis
+    active: true
+
+  - external_key: pm-metrics-tradeoff-11
+    title: North Star vs Guardrail Metrics
+    prompt: >-
+      Your team tests a new home-feed ranking model aimed at increasing Weekly Active
+      Retention (North Star). The experiment lifts clicks by +12%, but page load latency
+      p95 increases by +400ms and "hide/not interested" feedback rises by +18%.
+      Which decision best reflects sound product metric governance?
+    format: mcq
+    difficulty: easy
+    tags:
+      - product-management
+      - analytics
+      - strategy
+    options:
+      - Ship immediately to 100% because clicks increased significantly.
+      - Treat latency p95 and negative feedback rate as breached guardrail metrics, hold full rollout, and iterate on model efficiency and relevance before re-testing.
+      - Remove latency and hide-rate from the experiment scorecard to simplify stakeholder reporting.
+      - Extend the experiment for 12 more months without changing the model to see if latency normalizes on its own.
+    answer_indices:
+      - 1
+    default_points: 10
+    expected_answer: >-
+      Guardrail metrics protect long-term user trust and system health from short-term
+      clickbait or performance regressions. When guardrails breach thresholds, hold full
+      rollout, diagnose root causes, and optimize latency/quality before shipping.
+    evaluation_rubric: >-
+      10 pts for selecting option 1 (exact match).
+    active: true
+
+  - external_key: pm-launch-case-12
+    title: B2B Self-Serve Onboarding Redesign
+    prompt: |-
+      You are the Product Manager for a B2B developer collaboration SaaS platform. Funnel analytics show that **40% of new workspaces drop off** between creating an account and inviting their first teammate within 7 days.
+
+      Write a structured product strategy covering:
+      1. **Diagnosis & Hypotheses:** How would you segment the drop-off (quantitative + qualitative) to isolate top root causes?
+      2. **Prioritized Experiments:** Propose 3 concrete product interventions and explain how you would prioritize them (e.g., impact vs. effort / confidence).
+      3. **Success & Guardrail Metrics:** Define your activation metric, leading indicators, and guardrails (e.g., spam invites, support ticket load).
+      4. **Two-Quarter Roadmap & Rollout Plan:** Outline sequencing, A/B test design, and cross-functional dependencies.
+    format: text
+    difficulty: hard
+    tags:
+      - product-management
+      - case-study
+      - prioritization
+    default_points: 30
+    expected_answer: >-
+      Segment funnel by acquisition channel, company size, SSO/email domain, and first-session
+      actions; pair funnel cohorts with session replays and churned-user interviews to separate
+      "single-player evaluators" from friction (e.g., empty-state confusion, permission/IT
+      approval blockers, or missing sample project). Prioritize high-impact, low-friction
+      experiments such as interactive starter templates to reach first value before prompting
+      invites, contextual invite triggers on shareable artifacts, and frictionless domain-verified
+      join links. Measure 7-day team activation (2+ active users completing a core action) with
+      guardrails on invite acceptance rate, spam/unsubscribes, and 30-day workspace retention.
+    evaluation_rubric: |-
+      - 8 pts: Disciplined root-cause diagnosis combining quantitative segmentation and qualitative discovery
+      - 8 pts: Concrete, non-generic product experiments with clear prioritization rationale
+      - 7 pts: Well-defined activation metric plus meaningful guardrail metrics
+      - 7 pts: Pragmatic 2-quarter rollout, experiment methodology, and cross-functional risk mitigation
+    active: true

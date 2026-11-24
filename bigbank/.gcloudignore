@@ -1,0 +1,4 @@
+# Inherit container build exclusions so `gcloud builds submit` never uploads
+# local secrets (.env, .env.*), data/, venv/, frontend/node_modules/, tests/,
+# or .superpowers/, while keeping bundle/ (bundle/interview.db) for Dockerfile COPY.
+#!include:.dockerignore

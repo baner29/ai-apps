@@ -1,0 +1,41 @@
+# Version control & editor metadata
+.git/
+.github/
+.gitignore
+.vscode/
+.idea/
+.gemini/
+.adk/
+.superpowers/
+
+# Local Python virtualenvs, caches & test artifacts
+venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+tests/
+pytest.ini
+
+# Local secrets, dev database & generated reports (never bake into images)
+.env
+.env.*
+!.env.example
+data/
+*.pdf
+
+# Frontend local dependencies & prebuilt outputs (Stage 1 builds fresh)
+frontend/node_modules/
+frontend/dist/
+backend/static_spa/
+
+# Docs, deploy guides & misc workspace files
+docs/
+deploy/
+README.md
+docker-compose.yml
+sample_questions.md
+.gcloudignore
