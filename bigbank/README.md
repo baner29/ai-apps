@@ -9,21 +9,15 @@ Teams create custom interviews in the local **BigBank** Admin Studio, package a 
 
 **Candidate interview** — starting an assessment, answering a multiple-choice question, a long-form design question and a Python notebook question, then submitting.
 
-[![Candidate interview demo](demo/candidate-interview.gif)](demo/candidate-interview.mp4)
-
-[Watch the candidate interview as an MP4 video](demo/candidate-interview.mp4)
+![Candidate interview demo](demo/candidate-interview.gif)
 
 **Admin Studio** — the submitted assessment arriving in the results view.
 
-[![Admin Studio demo](demo/admin-studio.gif)](demo/admin-studio.mp4)
-
-[Watch the Admin Studio walkthrough as an MP4 video](demo/admin-studio.mp4)
+![Admin Studio demo](demo/admin-studio.gif)
 
 **Question bank upload** — bulk upload of a question bank file, with a preview of new, duplicate and invalid items before the import.
 
-[![Question bank upload demo](demo/question-bank-upload.gif)](demo/question-bank-upload.mp4)
-
-[Watch the question bank upload as an MP4 video](demo/question-bank-upload.mp4)
+![Question bank upload demo](demo/question-bank-upload.gif)
 
 ---
 
