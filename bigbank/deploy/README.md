@@ -115,11 +115,34 @@ Grant the Cloud Run runtime service account:
 - `roles/aiplatform.user` (only if using `LLM_PROVIDER=vertex_ai`)
 - `roles/secretmanager.secretAccessor` (if injecting API keys / SMTP / Slack secrets via `--set-secrets`)
 
+```bash
+export PROJECT_ID="your-gcp-project-id"
+export RUNTIME_SA="<your-runtime-service-account>@${PROJECT_ID}.iam.gserviceaccount.com"
+
+# Reports and raw candidate backups in the bucket
+gcloud storage buckets add-iam-policy-binding "gs://your-reports-bucket" \
+  --member="serviceAccount:${RUNTIME_SA}" \
+  --role="roles/storage.objectAdmin"
+
+# Vertex AI grading (only if using LLM_PROVIDER=vertex_ai)
+gcloud projects add-iam-policy-binding "$PROJECT_ID" \
+  --member="serviceAccount:${RUNTIME_SA}" \
+  --role="roles/aiplatform.user"
+```
+
+Without these grants the deployment still answers submissions, but grading
+fails and the bucket stays empty; the failures appear in the Cloud Run logs
+as `LLM score_answer failed` and `Raw backup to storage sink 'gcs' failed`.
+
 ### Build & Deploy
 
 ```bash
 export PROJECT_ID="your-gcp-project-id"
 export REGION="us-central1"
+# Vertex AI location is independent of the Cloud Run region: it selects
+# where the model is served from, and several Gemini models are available
+# only from "global". Use the location set in Admin Studio Settings.
+export VERTEX_LOCATION="global"
 export REPO="interview-platform"
 export IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO}/app:latest"
 
@@ -148,7 +171,7 @@ gcloud run deploy interview-platform \
   --concurrency=20 \
   --min-instances=0 \
   --max-instances=5 \
-  --set-env-vars="^|^APP_MODE=candidate|STORAGE_SINKS=gcs|GCS_BUCKET=your-reports-bucket|GCS_PREFIX=interviews|LLM_PROVIDER=vertex_ai|LLM_MODEL=gemini-2.5-pro|VERTEXAI_PROJECT=${PROJECT_ID}|VERTEXAI_LOCATION=${REGION}"
+  --set-env-vars="^|^APP_MODE=candidate|STORAGE_SINKS=gcs|GCS_BUCKET=your-reports-bucket|GCS_PREFIX=interviews|LLM_PROVIDER=vertex_ai|LLM_MODEL=gemini-2.5-pro|VERTEXAI_PROJECT=${PROJECT_ID}|VERTEXAI_LOCATION=${VERTEX_LOCATION}"
 ```
 
 > **Tip:** Allocate at least **2 GiB RAM** when notebook code execution (`pandas`, `numpy`, `matplotlib`) is enabled. For OpenAI/Anthropic/Gemini API keys or SMTP passwords, bind them via `--set-secrets="LLM_API_KEY=llm-api-key:latest"`.

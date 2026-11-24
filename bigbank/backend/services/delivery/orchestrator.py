@@ -87,6 +87,18 @@ class DeliveryOrchestrator:
             else:
                 results.append(outcome)
 
+        # A failed backup must be visible in the platform logs (for example
+        # Cloud Run), not only in the submission's delivery log: a missing
+        # bucket name, a missing SDK, or a 403 permission error otherwise
+        # surfaces as a silently empty bucket while /finish returns 200.
+        for result in results:
+            if not result.ok:
+                logger.error(
+                    "Raw backup to storage sink '%s' failed: %s",
+                    result.sink,
+                    result.error or "unknown error",
+                )
+
         return [r.to_dict() for r in results]
 
     async def deliver_report(
@@ -126,6 +138,14 @@ class DeliveryOrchestrator:
                     )
                 else:
                     storage_results.append(outcome)
+
+        for result in storage_results:
+            if not result.ok:
+                logger.error(
+                    "Report storage to sink '%s' failed: %s",
+                    result.sink,
+                    result.error or "unknown error",
+                )
 
         local_pdf_path: str | None = None
         for sr in storage_results:
