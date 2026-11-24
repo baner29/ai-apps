@@ -5,6 +5,28 @@ Teams create custom interviews in the local **BigBank** Admin Studio, package a 
 
 ---
 
+## Demo
+
+**Candidate interview** — starting an assessment, answering a multiple-choice question, a long-form design question and a Python notebook question, then submitting.
+
+[![Candidate interview demo](demo/candidate-interview.gif)](demo/candidate-interview.mp4)
+
+[Watch the candidate interview as an MP4 video](demo/candidate-interview.mp4)
+
+**Admin Studio** — the submitted assessment arriving in the results view.
+
+[![Admin Studio demo](demo/admin-studio.gif)](demo/admin-studio.mp4)
+
+[Watch the Admin Studio walkthrough as an MP4 video](demo/admin-studio.mp4)
+
+**Question bank upload** — bulk upload of a question bank file, with a preview of new, duplicate and invalid items before the import.
+
+[![Question bank upload demo](demo/question-bank-upload.gif)](demo/question-bank-upload.mp4)
+
+[Watch the question bank upload as an MP4 video](demo/question-bank-upload.mp4)
+
+---
+
 ## Why Use This Platform
 
 Enterprise hiring teams often pay high fees for rigid third-party tools that hide how scores are calculated. This platform gives your team full control:
@@ -17,6 +39,7 @@ Enterprise hiring teams often pay high fees for rigid third-party tools that hid
 
 ## Table of Contents
 
+- [Demo](#demo)
 - [Core Features](#core-features)
 - [System Architecture](#system-architecture)
 - [Quick Start for Local Authoring](#quick-start-for-local-authoring)
