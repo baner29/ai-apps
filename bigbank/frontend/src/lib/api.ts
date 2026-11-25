@@ -11,6 +11,7 @@
 import type {
   AdminLoginResponse,
   AdminStatus,
+  HealthResponse,
   DeleteResponse,
   DeployBundlePayload,
   DeployBundleResponse,
@@ -445,6 +446,10 @@ const admin = {
 // ---------------------------------------------------------------------------
 
 const publicApi = {
+  async getHealth(): Promise<HealthResponse> {
+    return request<HealthResponse>('/health');
+  },
+
   async getDefaultTemplate(): Promise<PublicTemplateMetadata> {
     return request<PublicTemplateMetadata>('/api/public/templates/default');
   },

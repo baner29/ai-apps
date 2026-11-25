@@ -1,6 +1,7 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 import { ToastProvider, Button, Card, CardContent, Spinner } from './components/ui';
+import { api } from './lib/api';
 import { CandidateFlow } from './pages/candidate/CandidateFlow';
 
 // Lazy-load Admin Studio routes so the Candidate Portal bundle stays minimal
@@ -36,6 +37,23 @@ function RouteLoadingFallback() {
 }
 
 function NotFoundPage() {
+  // Admin Studio is local-only; never offer it in a candidate deployment.
+  const [appMode, setAppMode] = useState<'local' | 'candidate'>('local');
+  useEffect(() => {
+    let live = true;
+    api.public
+      .getHealth()
+      .then((health) => {
+        if (live) setAppMode(health.mode);
+      })
+      .catch(() => {
+        // Keep the local default when the backend cannot be reached.
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-surface-0 flex items-center justify-center px-4">
       <Card className="w-full max-w-md text-center">
@@ -51,11 +69,13 @@ function NotFoundPage() {
                 Candidate Portal
               </Button>
             </Link>
-            <Link to="/admin">
-              <Button variant="secondary" size="sm">
-                Admin Studio
-              </Button>
-            </Link>
+            {appMode !== 'candidate' && (
+              <Link to="/admin">
+                <Button variant="secondary" size="sm">
+                  Admin Studio
+                </Button>
+              </Link>
+            )}
           </div>
         </CardContent>
       </Card>

@@ -222,3 +222,31 @@ __marimo__/
 # JavaScript dependencies and build output
 node_modules/
 dist/
+
+# --- Merged from the app-level .gitignore files (bigbank/, dofirst/) ---
+
+# Local secrets: per-app .env variants (example files stay tracked)
+bigbank/.env.*
+!bigbank/.env.example
+
+# BigBank runtime data and packaged candidate bundles
+bigbank/data/
+bigbank/bundle/*.db
+bigbank/bundle/*.db-wal
+bigbank/bundle/*.db-shm
+!bigbank/bundle/.gitkeep
+bigbank/backend/static_spa/
+
+# DoFirst runtime data
+dofirst/data/
+
+# Editor and agent tooling artifacts
+.vscode/
+.idea/
+.gemini/
+.adk/
+.superpowers/
+**/docs/superpowers/
+*.swp
+*.swo
+.DS_Store

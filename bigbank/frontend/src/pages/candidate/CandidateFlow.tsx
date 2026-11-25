@@ -328,6 +328,25 @@ export function CandidateFlow({
     previewMode && previewTemplate ? 'assessment' : 'loading'
   );
   const [loadError, setLoadError] = useState<string | null>(null);
+  // Admin Studio is a local-only surface: in a candidate deployment the
+  // portal must not link to it. The mode comes from the backend /health
+  // endpoint; until it answers, assume local so nothing flickers away.
+  const [appMode, setAppMode] = useState<'local' | 'candidate'>('local');
+  useEffect(() => {
+    if (previewMode) return;
+    let live = true;
+    api.public
+      .getHealth()
+      .then((health) => {
+        if (live) setAppMode(health.mode);
+      })
+      .catch(() => {
+        // Keep the local default when the backend cannot be reached.
+      });
+    return () => {
+      live = false;
+    };
+  }, [previewMode]);
   const [template, setTemplate] = useState<PublicTemplateMetadata | null>(
     () => previewTemplate ?? null
   );
@@ -871,14 +890,14 @@ export function CandidateFlow({
               <Button variant="secondary" size="sm" onClick={onExitPreview}>
                 Exit Preview
               </Button>
-            ) : (
+            ) : appMode !== 'candidate' ? (
               <Link
                 to="/admin"
                 className="text-xs font-medium text-slate-400 hover:text-slate-200 transition-colors focus-ring rounded-md px-2 py-1"
               >
                 Admin Studio
               </Link>
-            )}
+            ) : null}
           </div>
         </header>
 
@@ -906,11 +925,13 @@ export function CandidateFlow({
                   >
                     Retry
                   </Button>
-                  <Link to="/admin">
-                    <Button variant="outline" size="sm">
-                      Admin Studio
-                    </Button>
-                  </Link>
+                  {appMode !== 'candidate' && (
+                    <Link to="/admin">
+                      <Button variant="outline" size="sm">
+                        Admin Studio
+                      </Button>
+                    </Link>
+                  )}
                 </div>
               </CardContent>
             </Card>

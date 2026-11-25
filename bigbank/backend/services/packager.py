@@ -240,35 +240,136 @@ def _build_deploy_snippets(settings: Settings, bundle_path: Path) -> dict[str, s
     )
     notify_sinks = settings.notify_sinks.strip() or "slack"
 
-    docker_snippet = "\n".join(
-        [
-            "docker build -t bigbank:latest .",
-            "docker run --rm -p 8080:8080 \\",
-            "  -e APP_MODE=candidate \\",
-            f"  -e BUNDLE_PATH={bundle_posix} \\",
-            f"  -e LLM_PROVIDER={llm_provider} \\",
-            f"  -e LLM_MODEL={llm_model} \\",
-            '  -e LLM_API_KEY="<YOUR_LLM_API_KEY>" \\',
-            f"  -e STORAGE_SINKS={storage_sinks} \\",
-            f"  -e NOTIFY_SINKS={notify_sinks} \\",
-            "  bigbank:latest",
-        ]
-    )
+    # Provider- and storage-specific settings must travel with the deployment.
+    # Without them the deployed app silently falls back to built-in defaults
+    # (for example Vertex AI location "us-central1", or an empty GCS bucket),
+    # even though they were configured in Admin Studio Settings.
+    sink_set = {
+        s.strip().lower() for s in storage_sinks.split(",") if s.strip()
+    }
+    extra_env: list[tuple[str, str]] = []
+    if llm_provider == "vertex_ai":
+        extra_env.append(
+            (
+                "VERTEXAI_PROJECT",
+                settings.vertexai_project.strip() or "<YOUR_GCP_PROJECT_ID>",
+            )
+        )
+        extra_env.append(
+            (
+                "VERTEXAI_LOCATION",
+                settings.vertexai_location.strip() or "<YOUR_VERTEX_LOCATION>",
+            )
+        )
+    if "gcs" in sink_set:
+        extra_env.append(
+            ("GCS_BUCKET", settings.gcs_bucket.strip() or "<YOUR_GCS_BUCKET>")
+        )
+        extra_env.append(("GCS_PREFIX", settings.gcs_prefix.strip() or "interviews"))
+    if "s3" in sink_set:
+        extra_env.append(
+            ("S3_BUCKET", settings.s3_bucket.strip() or "<YOUR_S3_BUCKET>")
+        )
+        extra_env.append(("S3_PREFIX", settings.s3_prefix.strip() or "interviews"))
+        extra_env.append(("S3_REGION", settings.s3_region.strip() or "us-east-1"))
+        if settings.s3_endpoint_url.strip():
+            extra_env.append(("S3_ENDPOINT_URL", settings.s3_endpoint_url.strip()))
+    if sink_set & {"azure", "azure_blob", "azureblob"}:
+        extra_env.append(
+            (
+                "AZURE_STORAGE_CONTAINER",
+                settings.azure_storage_container.strip() or "<YOUR_AZURE_CONTAINER>",
+            )
+        )
+        extra_env.append(
+            (
+                "AZURE_STORAGE_PREFIX",
+                settings.azure_storage_prefix.strip() or "interviews",
+            )
+        )
+        if settings.azure_storage_account_url.strip():
+            extra_env.append(
+                ("AZURE_STORAGE_ACCOUNT_URL", settings.azure_storage_account_url.strip())
+            )
 
-    cloud_run_snippet = "\n".join(
-        [
-            "gcloud run deploy bigbank \\",
-            "  --source . \\",
-            "  --region <YOUR_REGION> \\",
-            "  --allow-unauthenticated \\",
-            "  --port 8080 \\",
-            f'  --set-env-vars "^|^APP_MODE=candidate|BUNDLE_PATH={bundle_posix}|'
-            f"LLM_PROVIDER={llm_provider}|LLM_MODEL={llm_model}|"
-            f'STORAGE_SINKS={storage_sinks}|NOTIFY_SINKS={notify_sinks}" \\',
-            "  --set-secrets LLM_API_KEY=<YOUR_LLM_SECRET>:latest",
-        ]
-    )
+    # Vertex AI authenticates with the runtime identity (ADC / Workload
+    # Identity), so no LLM_API_KEY secret is needed for it.
+    needs_api_key = llm_provider != "vertex_ai"
 
+    docker_lines = [
+        "docker build -t bigbank:latest .",
+        "docker run --rm -p 8080:8080 \\",
+        "  -e APP_MODE=candidate \\",
+        f"  -e BUNDLE_PATH={bundle_posix} \\",
+        f"  -e LLM_PROVIDER={llm_provider} \\",
+        f"  -e LLM_MODEL={llm_model} \\",
+    ]
+    if needs_api_key:
+        docker_lines.append('  -e LLM_API_KEY="<YOUR_LLM_API_KEY>" \\')
+    docker_lines += [f"  -e {key}={value} \\" for key, value in extra_env]
+    docker_lines += [
+        f"  -e STORAGE_SINKS={storage_sinks} \\",
+        f"  -e NOTIFY_SINKS={notify_sinks} \\",
+        "  bigbank:latest",
+    ]
+    docker_snippet = "\n".join(docker_lines)
+
+    # IAM grants the runtime identity needs, printed ahead of the deploy
+    # command so a missing permission is fixed before the first submission
+    # rather than discovered from a silently empty bucket afterwards.
+    iam_lines: list[str] = []
+    if "gcs" in sink_set:
+        bucket_name = settings.gcs_bucket.strip() or "<YOUR_GCS_BUCKET>"
+        iam_lines += [
+            "# 1. Grant the Cloud Run runtime service account write access to the bucket:",
+            f"gcloud storage buckets add-iam-policy-binding gs://{bucket_name} \\",
+            '  --member="serviceAccount:<YOUR_RUNTIME_SERVICE_ACCOUNT>" \\',
+            '  --role="roles/storage.objectAdmin"',
+            "",
+        ]
+    if llm_provider == "vertex_ai":
+        project_id = settings.vertexai_project.strip() or "<YOUR_GCP_PROJECT_ID>"
+        iam_lines += [
+            "# Grant the Cloud Run runtime service account Vertex AI access:",
+            f"gcloud projects add-iam-policy-binding {project_id} \\",
+            '  --member="serviceAccount:<YOUR_RUNTIME_SERVICE_ACCOUNT>" \\',
+            '  --role="roles/aiplatform.user"',
+            "",
+        ]
+    deploy_step = "2" if "gcs" in sink_set else "1"
+
+    extra_chain = "".join(f"{key}={value}|" for key, value in extra_env)
+    cloud_run_lines = iam_lines + [
+        f"# {deploy_step}. Deploy:",
+        "gcloud run deploy bigbank \\",
+        "  --source . \\",
+        "  --region <YOUR_REGION> \\",
+        "  --allow-unauthenticated \\",
+        "  --port 8080 \\",
+        f'  --set-env-vars "^|^APP_MODE=candidate|BUNDLE_PATH={bundle_posix}|'
+        f"LLM_PROVIDER={llm_provider}|LLM_MODEL={llm_model}|"
+        f"{extra_chain}"
+        f'STORAGE_SINKS={storage_sinks}|NOTIFY_SINKS={notify_sinks}"' + (" \\" if needs_api_key else ""),
+    ]
+    if needs_api_key:
+        cloud_run_lines.append(
+            "  --set-secrets LLM_API_KEY=<YOUR_LLM_SECRET>:latest"
+        )
+    cloud_run_snippet = "\n".join(cloud_run_lines)
+
+    app_runner_vars = [
+        '          "APP_MODE": "candidate",',
+        f'          "BUNDLE_PATH": "{bundle_posix}",',
+        f'          "LLM_PROVIDER": "{llm_provider}",',
+        f'          "LLM_MODEL": "{llm_model}",',
+    ]
+    app_runner_vars += [
+        f'          "{key}": "{value}",' for key, value in extra_env
+    ]
+    app_runner_vars += [
+        f'          "STORAGE_SINKS": "{storage_sinks}",',
+        f'          "NOTIFY_SINKS": "{notify_sinks}"',
+    ]
     aws_app_runner_snippet = "\n".join(
         [
             "# 1. Push image to ECR: <YOUR_ACCOUNT_ID>.dkr.ecr.<YOUR_REGION>.amazonaws.com/bigbank:latest",
@@ -282,12 +383,9 @@ def _build_deploy_snippets(settings: Settings, bundle_path: Path) -> dict[str, s
             '      "ImageConfiguration": {',
             '        "Port": "8080",',
             '        "RuntimeEnvironmentVariables": {',
-            '          "APP_MODE": "candidate",',
-            f'          "BUNDLE_PATH": "{bundle_posix}",',
-            f'          "LLM_PROVIDER": "{llm_provider}",',
-            f'          "LLM_MODEL": "{llm_model}",',
-            f'          "STORAGE_SINKS": "{storage_sinks}",',
-            f'          "NOTIFY_SINKS": "{notify_sinks}"',
+        ]
+        + app_runner_vars
+        + [
             "        }",
             "      }",
             "    }",
@@ -295,40 +393,48 @@ def _build_deploy_snippets(settings: Settings, bundle_path: Path) -> dict[str, s
         ]
     )
 
-    azure_container_apps_snippet = "\n".join(
-        [
-            "az containerapp up \\",
-            "  --name bigbank \\",
-            "  --resource-group <YOUR_RESOURCE_GROUP> \\",
-            "  --location <YOUR_LOCATION> \\",
-            "  --source . \\",
-            "  --ingress external \\",
-            "  --target-port 8080 \\",
-            "  --env-vars \\",
-            "    APP_MODE=candidate \\",
-            f"    BUNDLE_PATH={bundle_posix} \\",
-            f"    LLM_PROVIDER={llm_provider} \\",
-            f"    LLM_MODEL={llm_model} \\",
-            f"    STORAGE_SINKS={storage_sinks} \\",
-            f"    NOTIFY_SINKS={notify_sinks} \\",
-            '    LLM_API_KEY="<YOUR_LLM_API_KEY>"',
-        ]
-    )
+    azure_lines = [
+        "az containerapp up \\",
+        "  --name bigbank \\",
+        "  --resource-group <YOUR_RESOURCE_GROUP> \\",
+        "  --location <YOUR_LOCATION> \\",
+        "  --source . \\",
+        "  --ingress external \\",
+        "  --target-port 8080 \\",
+        "  --env-vars \\",
+        "    APP_MODE=candidate \\",
+        f"    BUNDLE_PATH={bundle_posix} \\",
+        f"    LLM_PROVIDER={llm_provider} \\",
+        f"    LLM_MODEL={llm_model} \\",
+    ]
+    azure_lines += [f"    {key}={value} \\" for key, value in extra_env]
+    azure_lines += [
+        f"    STORAGE_SINKS={storage_sinks} \\",
+        f"    NOTIFY_SINKS={notify_sinks}" + (" \\" if needs_api_key else ""),
+    ]
+    if needs_api_key:
+        azure_lines.append('    LLM_API_KEY="<YOUR_LLM_API_KEY>"')
+    azure_container_apps_snippet = "\n".join(azure_lines)
 
-    fly_io_snippet = "\n".join(
-        [
-            "fly launch --no-deploy --name <YOUR_APP_NAME>",
-            "fly secrets set \\",
-            '  LLM_API_KEY="<YOUR_LLM_API_KEY>" \\',
-            "  APP_MODE=candidate \\",
-            f"  BUNDLE_PATH={bundle_posix} \\",
-            f"  LLM_PROVIDER={llm_provider} \\",
-            f"  LLM_MODEL={llm_model} \\",
-            f"  STORAGE_SINKS={storage_sinks} \\",
-            f"  NOTIFY_SINKS={notify_sinks}",
-            "fly deploy",
-        ]
-    )
+    fly_lines = [
+        "fly launch --no-deploy --name <YOUR_APP_NAME>",
+        "fly secrets set \\",
+    ]
+    if needs_api_key:
+        fly_lines.append('  LLM_API_KEY="<YOUR_LLM_API_KEY>" \\')
+    fly_lines += [
+        "  APP_MODE=candidate \\",
+        f"  BUNDLE_PATH={bundle_posix} \\",
+        f"  LLM_PROVIDER={llm_provider} \\",
+        f"  LLM_MODEL={llm_model} \\",
+    ]
+    fly_lines += [f"  {key}={value} \\" for key, value in extra_env]
+    fly_lines += [
+        f"  STORAGE_SINKS={storage_sinks} \\",
+        f"  NOTIFY_SINKS={notify_sinks}",
+        "fly deploy",
+    ]
+    fly_io_snippet = "\n".join(fly_lines)
 
     return {
         "docker": docker_snippet,
